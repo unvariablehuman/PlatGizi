@@ -135,9 +135,9 @@ Tampilkan menu + progress bar gizi
 
 | No | Nama | NIM |
 |----|------|-----|
-| 1  | Sabrina Arfanindia D     |  2802448755   |
-| 2  | HERLINDA ANGELICA TANJAYA     | 2802397754    |
-| 3  |  KRISTIAN NOVAN    |  2802458560   |
+| 1  | Sabrina Arfanindia D | 2802448755 |
+| 2  | Herlinda Angelica Tanjaya | 2802397754 |
+| 3  | Kristian Novan | 2802458560 |
 
 ---
 
