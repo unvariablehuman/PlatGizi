@@ -1,6 +1,6 @@
 # 🍽️ PlatGizi – Smart Menu Planner MBG
 
-> Sistem Rekomendasi Menu Bergizi Harian berbasis Machine Learning untuk mendukung Program **Makan Bergizi Gratis (MBG)** — SDG 2 & SDG 3
+> Sistem Rekomendasi Menu Bergizi Harian berbasis Machine Learning untuk mendukung Program **Makan Bergizi Gratis (MBG)** — SDG 2
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://platgizi.streamlit.app)
 
