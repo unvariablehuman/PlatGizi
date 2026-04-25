@@ -28,7 +28,7 @@ html, body, [class*="css"] { font-family: 'Nunito', sans-serif; }
 .main { background-color: #f8fdf4; }
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-header {visibility: hidden;}
+header {visibility: visible;}
 
 /* ── SIDEBAR ── */
 [data-testid="stSidebar"] {
