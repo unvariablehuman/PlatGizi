@@ -684,11 +684,25 @@ elif page == "Step 2: Preprocessing":
                 st.dataframe(null_df, use_container_width=True)
             with t3:
                 st.dataframe(nutrition_raw.describe().round(2), use_container_width=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown("**Pilih metode preprocessing:**")
+            na_handle = st.radio(
+                "NA Handle",
+                ["Median (Recommended)", "Mean", "Drop"],
+                horizontal=True,
+                key="na_handle_gizi"
+            )
+            submitted = st.button("Submit & Preprocess!", use_container_width=True, key="submit_gizi")
+
+            if submitted:
+                st.session_state["gizi_submitted"] = True
+                st.session_state["na_handle_gizi_selected"] = na_handle
         else:
             st.info("File nutrition.csv belum ditemukan di folder Preprocess Data.")
 
     with tab_clean:
-        if csv_loaded:
+        if csv_loaded and st.session_state.get("gizi_submitted", False):
             st.success("Data preprocessing berhasil dimuat.")
             st.markdown(f"""
             <div class="info-card" style="margin-bottom:12px;">
@@ -712,8 +726,10 @@ elif page == "Step 2: Preprocessing":
                 null_df2 = nutrition_clean.isnull().sum().reset_index()
                 null_df2.columns = ["Kolom", "Jumlah Null"]
                 st.dataframe(null_df2, use_container_width=True)
-        else:
+        elif not csv_loaded:
             st.info("File nutrition_clean.csv belum ditemukan di folder Preprocess Data.")
+        else:
+            st.info("Klik Submit & Preprocess! di tab Raw Data untuk melihat hasil preprocessing.")
 
     if csv_loaded:
         section("Before vs After - Dataset Gizi")
