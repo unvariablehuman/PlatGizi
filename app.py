@@ -847,6 +847,12 @@ elif page == "Step 4: Content-Based Filtering":
     with col1:
         section("Cara Kerja Sistem")
         st.markdown("""
+    # Layouting for Step 4
+    col1, col2 = st.columns([3, 2])
+
+    with col1:
+        section("Alur Rekomendasi")
+        st.markdown("""
         <div class="info-card">
             <div style="font-family:monospace;font-size:0.85rem;color:#1d2b22;line-height:2.2;background:#f8fdf4;
                         padding:16px;border-radius:8px;border:1px solid #e8f5ee;">
@@ -878,23 +884,6 @@ elif page == "Step 4: Content-Based Filtering":
             Di mana <b>A</b> = vektor gizi target, <b>B</b> = vektor gizi makanan kandidat.
         </div>
         """, unsafe_allow_html=True)
-
-        section("Proporsi Waktu Makan")
-        meals = [
-            ("Sarapan", "25%", "#f5a623", "Target kalori × 0.25"),
-            ("Makan Siang", "40%", "#2d9e5f", "Target kalori × 0.40"),
-            ("Makan Malam", "35%", "#4a6fa5", "Target kalori × 0.35"),
-        ]
-        mc = st.columns(3)
-        for i, (label, pct, color, desc) in enumerate(meals):
-            with mc[i]:
-                st.markdown(f"""
-                <div class="metric-card" style="border-top:4px solid {color};">
-                    <div class="metric-num" style="color:{color};">{pct}</div>
-                    <div class="metric-label">{label}</div>
-                    <div style="font-size:0.75rem;color:#888;margin-top:6px;">{desc}</div>
-                </div>
-                """, unsafe_allow_html=True)
 
     with col2:
         section("Evaluasi Content-Based Filtering")
@@ -933,15 +922,37 @@ elif page == "Step 4: Content-Based Filtering":
         </div>
         """, unsafe_allow_html=True)
 
-        section("Ringkasan Sistem")
-        features = [
-            ("", "Metode", "Cosine Similarity"),
-            ("", "Profil tersedia", "4 profil pengguna"),
-            ("", "Waktu makan", "Sarapan, Siang, Malam"),
-            ("", "Variasi menu", "Tidak ada makanan sama dalam 1 hari"),
-            ("", "Menu mingguan", "Generate 7 hari sekaligus"),
-        ]
-        for icon, key, val in features:
+    # Moving Proporsi and Ringkasan outside the columns to span full width
+    section("Proporsi Waktu Makan")
+    meals = [
+        ("Sarapan", "25%", "#f5a623", "Target kalori × 0.25"),
+        ("Makan Siang", "40%", "#2d9e5f", "Target kalori × 0.40"),
+        ("Makan Malam", "35%", "#4a6fa5", "Target kalori × 0.35"),
+    ]
+    mc = st.columns(3)
+    for i, (label, pct, color, desc) in enumerate(meals):
+        with mc[i]:
+            st.markdown(f"""
+            <div class="metric-card" style="border-top:4px solid {color};">
+                <div class="metric-num" style="color:{color};">{pct}</div>
+                <div class="metric-label">{label}</div>
+                <div style="font-size:0.75rem;color:#888;margin-top:6px;">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    section("Ringkasan Sistem")
+    features = [
+        ("", "Metode", "Cosine Similarity"),
+        ("", "Profil tersedia", "4 profil pengguna"),
+        ("", "Waktu makan", "Sarapan, Siang, Malam"),
+        ("", "Variasi menu", "Tidak ada makanan sama dalam 1 hari"),
+        ("", "Menu mingguan", "Generate 7 hari sekaligus"),
+    ]
+    # Split summary into columns to fill horizontal space
+    f_col1, f_col2 = st.columns(2)
+    for i, (icon, key, val) in enumerate(features):
+        target_col = f_col1 if i < 3 else f_col2
+        with target_col:
             st.markdown(f"""
             <div style="display:flex;padding:7px 0;border-bottom:1px solid #f0f7f2;font-size:0.85rem;">
                 <span style="margin-right:8px;">{icon}</span>
