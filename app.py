@@ -671,9 +671,9 @@ elif page == "Step 2: Preprocessing":
         """, unsafe_allow_html=True)
         mc1, mc2 = st.columns(2)
         with mc1:
-            st.metric("Data Awal", "~1.345 baris")
+            st.metric("Data Awal", "1346")
         with mc2:
-            st.metric("Data Bersih", f"{len(nutrition_df)} baris")
+            st.metric("Data Bersih", f"{len(nutrition_df)}")
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col2:
@@ -704,9 +704,9 @@ elif page == "Step 2: Preprocessing":
         """, unsafe_allow_html=True)
         mc1, mc2 = st.columns(2)
         with mc1:
-            st.metric("Data Awal", "~16.000+ baris")
+            st.metric("Data Awal", "15641")
         with mc2:
-            st.metric("Data Bersih", f"{len(resep_df)} baris")
+            st.metric("Data Bersih", f"{len(resep_df)}")
         st.markdown("</div>", unsafe_allow_html=True)
 
     # Sample data
@@ -909,19 +909,20 @@ elif page == "Step 4: Content-Based Filtering":
             ("SMP/SMA", 99.9, "#2d9e5f"),
             ("Ibu Hamil/Menyusui", 98.6, "#f39c12"),
         ]
-        for label, score, color in profiles_eval:
-            st.markdown(f"""
-            <div style="margin-bottom:14px;">
-                <div style="display:flex;justify-content:space-between;font-size:0.85rem;
-                            font-weight:700;color:#1d2b22;margin-bottom:6px;">
-                    <span>{label}</span>
-                    <span style="color:{color};">{score}%</span>
+        prof_cols = st.columns(4)
+        for col, (label, score, color) in zip(prof_cols, profiles_eval):
+            with col:
+                st.markdown(f"""
+                <div style="background:white;border:1px solid #e8f5ee;border-radius:16px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.04);height:100%;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;font-weight:700;color:#1d2b22;margin-bottom:10px;gap:12px;">
+                        <span style="line-height:1.35;">{label}</span>
+                        <span style="color:{color};white-space:nowrap;">{score}%</span>
+                    </div>
+                    <div style="background:#e8f5ee;border-radius:999px;height:10px;overflow:hidden;">
+                        <div style="background:{color};width:{score}%;height:10px;border-radius:999px;"></div>
+                    </div>
                 </div>
-                <div style="background:#e8f5ee;border-radius:999px;height:10px;overflow:hidden;">
-                    <div style="background:{color};width:{score}%;height:10px;border-radius:999px;"></div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
         st.markdown("""
         <div class="metric-card" style="margin-top:16px;border-top:4px solid #2d9e5f;">
