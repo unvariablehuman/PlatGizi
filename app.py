@@ -627,7 +627,7 @@ elif page == "Step 1: EDA":
 # PAGE: PREPROCESSING
 # ═══════════════════════════════════════════
 elif page == "Step 2: Preprocessing":
-    hero("Data Preprocessing", "Membersihkan & menyiapkan data untuk model ML", "Step 2 dari 5")
+    hero("Data Preprocessing", "Membersihkan dan menyiapkan data untuk model ML", "Step 2 dari 5")
 
     st.markdown("""
     <div class="section-desc">
@@ -636,98 +636,241 @@ elif page == "Step 2: Preprocessing":
     </div>
     """, unsafe_allow_html=True)
 
-    if not model_loaded:
-        st.error("Model tidak berhasil dimuat.")
-        st.stop()
+    @st.cache_data
+    def load_raw():
+        base = os.path.dirname(os.path.abspath(__file__))
+        data_dir = os.path.join(base, "Preprocess Data")
+        nutrition_raw = pd.read_csv(os.path.join(data_dir, "nutrition.csv"))
+        resep_raw = pd.read_csv(os.path.join(data_dir, "resep_raw.csv"))
+        return nutrition_raw, resep_raw
 
+    @st.cache_data
+    def load_clean():
+        base = os.path.dirname(os.path.abspath(__file__))
+        data_dir = os.path.join(base, "Preprocess Data")
+        nutrition_clean = pd.read_csv(os.path.join(data_dir, "nutrition_clean.csv"))
+        resep_clean = pd.read_csv(os.path.join(data_dir, "resep_clean.csv"))
+        return nutrition_clean, resep_clean
+
+    try:
+        nutrition_raw, resep_raw = load_raw()
+        nutrition_clean, resep_clean = load_clean()
+        csv_loaded = True
+    except Exception:
+        csv_loaded = False
+
+    section("Dataset Gizi (nutrition.csv)")
+    tab_raw, tab_clean = st.tabs(["Raw Data", "Preprocessed Data"])
+
+    with tab_raw:
+        if csv_loaded:
+            st.markdown(f"""
+            <div class="info-card" style="margin-bottom:12px;">
+                <div style="display:flex;gap:24px;font-size:0.85rem;color:#555;">
+                    <span><b>{nutrition_raw.shape[0]}</b> baris</span>
+                    <span><b>{nutrition_raw.shape[1]}</b> kolom</span>
+                    <span><b>{nutrition_raw.isnull().sum().sum()}</b> nilai kosong</span>
+                    <span><b>{nutrition_raw.duplicated().sum()}</b> duplikat</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            t1, t2, t3 = st.tabs(["Data Preview", "Data Null", "Data Count"])
+            with t1:
+                st.dataframe(nutrition_raw.head(10), use_container_width=True)
+            with t2:
+                null_df = nutrition_raw.isnull().sum().reset_index()
+                null_df.columns = ["Kolom", "Jumlah Null"]
+                st.dataframe(null_df, use_container_width=True)
+            with t3:
+                st.dataframe(nutrition_raw.describe().round(2), use_container_width=True)
+        else:
+            st.info("File nutrition.csv belum ditemukan di folder Preprocess Data.")
+
+    with tab_clean:
+        if csv_loaded:
+            st.success("Data preprocessing berhasil dimuat.")
+            st.markdown(f"""
+            <div class="info-card" style="margin-bottom:12px;">
+                <div style="display:flex;gap:24px;font-size:0.85rem;color:#555;">
+                    <span><b>{nutrition_clean.shape[0]}</b> baris</span>
+                    <span><b>{nutrition_clean.shape[1]}</b> kolom</span>
+                    <span><b>{nutrition_clean.isnull().sum().sum()}</b> nilai kosong</span>
+                    <span><b>{nutrition_clean.duplicated().sum()}</b> duplikat</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            t1, t2, t3 = st.tabs(["Data Preview", "Scaled Data", "Data Null"])
+            with t1:
+                st.dataframe(nutrition_clean.head(10), use_container_width=True)
+            with t2:
+                norm_cols = [c for c in nutrition_clean.columns if "_norm" in c]
+                cols_scaled = ["name"] + norm_cols if "name" in nutrition_clean.columns else norm_cols
+                st.dataframe(nutrition_clean[cols_scaled].head(10), use_container_width=True)
+            with t3:
+                null_df2 = nutrition_clean.isnull().sum().reset_index()
+                null_df2.columns = ["Kolom", "Jumlah Null"]
+                st.dataframe(null_df2, use_container_width=True)
+        else:
+            st.info("File nutrition_clean.csv belum ditemukan di folder Preprocess Data.")
+
+    if csv_loaded:
+        section("Before vs After - Dataset Gizi")
+        c1, c2, c3, c4 = st.columns(4)
+        deltas = [
+            (c1, "Jumlah Baris", nutrition_raw.shape[0], nutrition_clean.shape[0], "baris"),
+            (c2, "Jumlah Kolom", nutrition_raw.shape[1], nutrition_clean.shape[1], "kolom"),
+            (c3, "Nilai Kosong", nutrition_raw.isnull().sum().sum(), nutrition_clean.isnull().sum().sum(), "cells"),
+            (c4, "Duplikat", nutrition_raw.duplicated().sum(), nutrition_clean.duplicated().sum(), "baris"),
+        ]
+        for col, label, before, after, unit in deltas:
+            with col:
+                st.markdown(f"""
+                <div class="metric-card">
+                    <div style="font-size:0.75rem;color:#888;margin-bottom:4px;">{label}</div>
+                    <div style="display:flex;justify-content:center;align-items:center;gap:10px;">
+                        <div style="text-align:center;">
+                            <div style="font-size:1.1rem;font-weight:900;color:#e74c3c;">{before}</div>
+                            <div style="font-size:0.7rem;color:#aaa;">Before</div>
+                        </div>
+                        <div style="color:#aaa;">to</div>
+                        <div style="text-align:center;">
+                            <div style="font-size:1.1rem;font-weight:900;color:#2d9e5f;">{after}</div>
+                            <div style="font-size:0.7rem;color:#aaa;">After</div>
+                        </div>
+                    </div>
+                    <div class="metric-unit">{unit}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    section("Dataset Resep")
+    tab_raw2, tab_clean2 = st.tabs(["Raw Data", "Preprocessed Data"])
+
+    with tab_raw2:
+        if csv_loaded:
+            st.markdown(f"""
+            <div class="info-card" style="margin-bottom:12px;">
+                <div style="display:flex;gap:24px;font-size:0.85rem;color:#555;">
+                    <span><b>{resep_raw.shape[0]}</b> baris</span>
+                    <span><b>{resep_raw.shape[1]}</b> kolom</span>
+                    <span><b>{resep_raw.isnull().sum().sum()}</b> nilai kosong</span>
+                    <span><b>{resep_raw.duplicated().sum()}</b> duplikat</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            t1, t2, t3 = st.tabs(["Data Preview", "Data Null", "Per Kategori"])
+            with t1:
+                st.dataframe(resep_raw.head(10), use_container_width=True)
+            with t2:
+                null_r = resep_raw.isnull().sum().reset_index()
+                null_r.columns = ["Kolom", "Jumlah Null"]
+                st.dataframe(null_r, use_container_width=True)
+            with t3:
+                if "kategori" in resep_raw.columns:
+                    cat_count = resep_raw["kategori"].value_counts().reset_index()
+                    cat_count.columns = ["Kategori", "Jumlah"]
+                    st.dataframe(cat_count, use_container_width=True)
+        else:
+            st.info("File resep_raw.csv belum ditemukan di folder Preprocess Data.")
+
+    with tab_clean2:
+        if csv_loaded:
+            st.success("Data preprocessing berhasil dimuat.")
+            st.markdown(f"""
+            <div class="info-card" style="margin-bottom:12px;">
+                <div style="display:flex;gap:24px;font-size:0.85rem;color:#555;">
+                    <span><b>{resep_clean.shape[0]}</b> baris</span>
+                    <span><b>{resep_clean.shape[1]}</b> kolom</span>
+                    <span><b>{resep_clean.isnull().sum().sum()}</b> nilai kosong</span>
+                    <span><b>{resep_clean.duplicated().sum()}</b> duplikat</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            t1, t2, t3 = st.tabs(["Data Preview", "Data Null", "Per Kategori"])
+            with t1:
+                st.dataframe(resep_clean.head(10), use_container_width=True)
+            with t2:
+                null_r2 = resep_clean.isnull().sum().reset_index()
+                null_r2.columns = ["Kolom", "Jumlah Null"]
+                st.dataframe(null_r2, use_container_width=True)
+            with t3:
+                if "kategori" in resep_clean.columns:
+                    cat_count2 = resep_clean["kategori"].value_counts().reset_index()
+                    cat_count2.columns = ["Kategori", "Jumlah"]
+                    st.dataframe(cat_count2, use_container_width=True)
+        else:
+            st.info("File resep_clean.csv belum ditemukan di folder Preprocess Data.")
+
+    if csv_loaded:
+        section("Before vs After - Dataset Resep")
+        c1, c2, c3, c4 = st.columns(4)
+        deltas2 = [
+            (c1, "Jumlah Baris", resep_raw.shape[0], resep_clean.shape[0], "baris"),
+            (c2, "Jumlah Kolom", resep_raw.shape[1], resep_clean.shape[1], "kolom"),
+            (c3, "Nilai Kosong", resep_raw.isnull().sum().sum(), resep_clean.isnull().sum().sum(), "cells"),
+            (c4, "Duplikat", resep_raw.duplicated().sum(), resep_clean.duplicated().sum(), "baris"),
+        ]
+        for col, label, before, after, unit in deltas2:
+            with col:
+                st.markdown(f"""
+                <div class="metric-card">
+                    <div style="font-size:0.75rem;color:#888;margin-bottom:4px;">{label}</div>
+                    <div style="display:flex;justify-content:center;align-items:center;gap:10px;">
+                        <div style="text-align:center;">
+                            <div style="font-size:1.1rem;font-weight:900;color:#e74c3c;">{before}</div>
+                            <div style="font-size:0.7rem;color:#aaa;">Before</div>
+                        </div>
+                        <div style="color:#aaa;">to</div>
+                        <div style="text-align:center;">
+                            <div style="font-size:1.1rem;font-weight:900;color:#2d9e5f;">{after}</div>
+                            <div style="font-size:0.7rem;color:#aaa;">After</div>
+                        </div>
+                    </div>
+                    <div class="metric-unit">{unit}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    section("Langkah-langkah Preprocessing")
     col1, col2 = st.columns(2)
 
     with col1:
-        section("Preprocessing Dataset Gizi")
+        st.markdown("<b style='color:#1a6b3c;'>Dataset Gizi</b>", unsafe_allow_html=True)
         steps_gizi = [
-            ("Hapus kolom tidak dipakai", "Kolom `id` dan `image` dihapus karena tidak relevan untuk ML"),
-            ("Hapus baris gizi = 0", "Baris yang semua nilai gizinya 0 dianggap data tidak valid"),
-            ("Isi nilai kosong (NaN)", "NaN diisi dengan nilai median agar tidak bias ke mean"),
-            ("Hapus duplikat nama", "Makanan dengan nama sama dihapus untuk menghindari redundansi"),
-            ("Normalisasi (MinMaxScaler)", "Skala nilai gizi ke 0–1 agar kalori tidak mendominasi fitur lain"),
+            ("Hapus kolom tidak dipakai", "Kolom id dan image dihapus"),
+            ("Hapus baris gizi 0", "Baris yang semua nilai gizinya 0 dihapus"),
+            ("Isi nilai kosong", "Nilai kosong diisi dengan median"),
+            ("Hapus duplikat nama", "Makanan dengan nama sama dihapus"),
+            ("Normalisasi MinMaxScaler", "Skala nilai gizi ke rentang 0 sampai 1"),
         ]
-        for i, (title, desc) in enumerate(steps_gizi, 1):
+        for title, desc in steps_gizi:
             st.markdown(f"""
-            <div class="info-card" style="padding:12px 16px;margin-bottom:10px;">
-                <div style="display:flex;align-items:center;margin-bottom:4px;">
-                    <span style="background:#1a6b3c;color:white;border-radius:50%;
-                                 width:24px;height:24px;line-height:24px;text-align:center;
-                                 font-size:0.75rem;font-weight:900;margin-right:10px;flex-shrink:0;">{i}</span>
-                    <b style="color:#1a6b3c;font-size:0.9rem;">{title}</b>
-                </div>
-                <div style="font-size:0.82rem;color:#666;padding-left:34px;">{desc}</div>
+            <div class="info-card" style="padding:10px 14px;margin-bottom:8px;">
+                <b style="color:#1a6b3c;font-size:0.87rem;">{title}</b>
+                <div style="font-size:0.8rem;color:#666;margin-top:4px;">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-
-        # Stats before/after
-        st.markdown("""
-        <div class="info-card" style="background:#f8fdf4;">
-            <h4>Hasil Preprocessing Gizi</h4>
-        """, unsafe_allow_html=True)
-        mc1, mc2 = st.columns(2)
-        with mc1:
-            st.metric("Data Awal", "1346")
-        with mc2:
-            st.metric("Data Bersih", f"{len(nutrition_df)}")
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with col2:
-        section("Preprocessing Dataset Resep")
+        st.markdown("<b style='color:#1a6b3c;'>Dataset Resep</b>", unsafe_allow_html=True)
         steps_resep = [
-            ("Gabungkan 8 file CSV", "Semua file per kategori (ayam, ikan, tempe, dll) digabung jadi 1 DataFrame"),
-            ("Tambah kolom kategori", "Kolom `kategori` ditambahkan sebagai label asal file"),
+            ("Gabungkan 8 file CSV", "Semua file per kategori digabung jadi satu"),
+            ("Tambah kolom kategori", "Label kategori ditambahkan"),
             ("Hapus duplikat judul", "Resep dengan judul sama dihapus"),
-            ("Hapus baris kosong", "Baris yang Title atau Ingredients kosong dihapus"),
-            ("Seleksi kolom penting", "Hanya simpan kolom: Title, Ingredients, Loves, kategori"),
+            ("Hapus baris kosong", "Baris Title atau Ingredients kosong dihapus"),
+            ("Seleksi kolom penting", "Simpan kolom Title, Ingredients, Loves, kategori"),
         ]
-        for i, (title, desc) in enumerate(steps_resep, 1):
+        for title, desc in steps_resep:
             st.markdown(f"""
-            <div class="info-card" style="padding:12px 16px;margin-bottom:10px;">
-                <div style="display:flex;align-items:center;margin-bottom:4px;">
-                    <span style="background:#2d9e5f;color:white;border-radius:50%;
-                                 width:24px;height:24px;line-height:24px;text-align:center;
-                                 font-size:0.75rem;font-weight:900;margin-right:10px;flex-shrink:0;">{i}</span>
-                    <b style="color:#1a6b3c;font-size:0.9rem;">{title}</b>
-                </div>
-                <div style="font-size:0.82rem;color:#666;padding-left:34px;">{desc}</div>
+            <div class="info-card" style="padding:10px 14px;margin-bottom:8px;">
+                <b style="color:#1a6b3c;font-size:0.87rem;">{title}</b>
+                <div style="font-size:0.8rem;color:#666;margin-top:4px;">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="info-card" style="background:#f8fdf4;">
-            <h4>Hasil Preprocessing Resep</h4>
-        """, unsafe_allow_html=True)
-        mc1, mc2 = st.columns(2)
-        with mc1:
-            st.metric("Data Awal", "15641")
-        with mc2:
-            st.metric("Data Bersih", f"{len(resep_df)}")
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # Sample data
-    section("Preview Data Hasil Preprocessing")
-    tab1, tab2 = st.tabs(["Dataset Gizi (nutrition_clean)", "Dataset Resep (resep_clean)"])
-    with tab1:
-        show_cols = ['name','calories','proteins','fat','carbohydrate','calories_norm','proteins_norm','fat_norm','carbo_norm']
-        show_cols = [c for c in show_cols if c in nutrition_df.columns]
-        st.dataframe(nutrition_df[show_cols].head(10), use_container_width=True)
-    with tab2:
-        show_cols2 = [c for c in ['Title','Ingredients','Loves','kategori'] if c in resep_df.columns]
-        st.dataframe(resep_df[show_cols2].head(10), use_container_width=True)
-
-    section("Mengapa Normalisasi Penting?")
-    st.markdown("""
-    <div class="section-desc">
-        Kalori memiliki rentang nilai <b>0–1000+ kkal</b>, sedangkan protein/lemak/karbo berada di <b>0–100 gram</b>.
-        Tanpa normalisasi, kalori akan <b>mendominasi perhitungan jarak</b> di K-Means, sehingga cluster hanya mencerminkan perbedaan kalori,
-        bukan profil gizi secara keseluruhan. Dengan <b>MinMaxScaler</b>, semua fitur berada di skala 0–1 sehingga kontribusinya seimbang.
-    </div>
-    """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
