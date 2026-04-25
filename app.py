@@ -12,7 +12,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 # ─────────────────────────────────────────
 st.set_page_config(
     page_title="PlatGizi – Smart Menu Planner MBG",
-    page_icon="🍽️",
+    page_icon="PG",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -23,7 +23,6 @@ st.set_page_config(
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
 html, body, [class*="css"] { font-family: 'Nunito', sans-serif; }
 .main { background-color: #f8fdf4; }
@@ -58,13 +57,7 @@ header {visibility: visible;}
     color: white;
     margin: 0;
     letter-spacing: -1px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
 }
-.hero-title i { font-size: 0.92em; }
 .hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-top: 8px; }
 .hero-badge {
     display: inline-block;
@@ -76,7 +69,6 @@ header {visibility: visible;}
     font-size: 0.85rem;
     margin-top: 12px;
 }
-.hero-badge i { margin-right: 8px; }
 
 /* ── SECTION TITLE ── */
 .section-title {
@@ -86,17 +78,6 @@ header {visibility: visible;}
     border-left: 5px solid #2d9e5f;
     padding-left: 16px;
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    line-height: 1.15;
-}
-.section-icon {
-    width: 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
 }
 .section-desc {
     background: white;
@@ -368,9 +349,7 @@ def generate_menu_mingguan(profil, jumlah_hari=7):
 with st.sidebar:
     st.markdown("""
     <div style="text-align:center; padding: 16px 0 8px 0;">
-        <div style="font-family:'Playfair Display',serif; font-size:1.6rem; color:white; font-weight:700; display:flex; align-items:center; justify-content:center; gap:10px;">
-            <i class="fa-solid fa-utensils"></i><span>PlatGizi</span>
-        </div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.6rem; color:white; font-weight:700;">PlatGizi</div>
         <div style="font-size:0.75rem; color:rgba(255,255,255,0.7); margin-top:4px;">Smart Menu Planner MBG</div>
     </div>
     """, unsafe_allow_html=True)
@@ -379,12 +358,12 @@ with st.sidebar:
     page = st.radio(
         "Navigasi",
         options=[
-            "🏠  Home",
-            "📊  Step 1: EDA",
-            "⚙️  Step 2: Preprocessing",
-            "🔵  Step 3: K-Means Clustering",
-            "🎯  Step 4: Content-Based Filtering",
-            "🍽️  Step 5: Demo Rekomendasi",
+            "Home",
+            "Step 1: EDA",
+            "Step 2: Preprocessing",
+            "Step 3: K-Means Clustering",
+            "Step 4: Content-Based Filtering",
+            "Step 5: Demo Rekomendasi",
         ],
         label_visibility="collapsed"
     )
@@ -394,7 +373,7 @@ with st.sidebar:
     <div style="font-size:0.72rem; color:rgba(255,255,255,0.55); text-align:center; line-height:1.8;">
         Machine Learning Project<br>
         Binus University · LC01<br>
-        SDG 2 🌱 & SDG 3 💚
+        SDG 2 & SDG 3
     </div>
     """, unsafe_allow_html=True)
 
@@ -403,70 +382,23 @@ with st.sidebar:
 # HELPER
 # ─────────────────────────────────────────
 def hero(title, subtitle, badge="Powered by Machine Learning"):
-    title_key = title.lower()
-    hero_icon = "fa-solid fa-utensils"
-    if "eda" in title_key or "analysis" in title_key:
-        hero_icon = "fa-solid fa-chart-column"
-    elif "preprocessing" in title_key:
-        hero_icon = "fa-solid fa-gears"
-    elif "clustering" in title_key:
-        hero_icon = "fa-solid fa-circle-nodes"
-    elif "content" in title_key:
-        hero_icon = "fa-solid fa-filter"
-    elif "demo" in title_key:
-        hero_icon = "fa-solid fa-bowl-food"
-
     st.markdown(f"""
     <div class="hero-box">
-        <div class="hero-title"><i class="{hero_icon}"></i><span>{title}</span></div>
+        <div class="hero-title">{title}</div>
         <div class="hero-subtitle">{subtitle}</div>
-        <div class="hero-badge"><i class="fa-solid fa-wand-magic-sparkles"></i>{badge}</div>
+        <div class="hero-badge">{badge}</div>
     </div>
     """, unsafe_allow_html=True)
 
 def section(title):
-    title_key = title.lower()
-    icon_class = "fa-solid fa-circle-info"
-    icon_color = "#2d9e5f"
-
-    if "top 10" in title_key:
-        icon_class, icon_color = "fa-solid fa-trophy", "#f5a623"
-    elif "distribusi" in title_key or "statistik" in title_key:
-        icon_class, icon_color = "fa-solid fa-chart-column", "#3498db"
-    elif "korelasi" in title_key:
-        icon_class, icon_color = "fa-solid fa-fire-flame-curved", "#e74c3c"
-    elif "resep" in title_key:
-        icon_class, icon_color = "fa-solid fa-magnifying-glass", "#3498db"
-    elif "insight" in title_key:
-        icon_class, icon_color = "fa-solid fa-lightbulb", "#f39c12"
-    elif "preprocessing" in title_key or "normalisasi" in title_key:
-        icon_class, icon_color = "fa-solid fa-gears", "#2d9e5f"
-    elif "elbow" in title_key or "pemilihan k" in title_key:
-        icon_class, icon_color = "fa-solid fa-circle-nodes", "#f39c12"
-    elif "clustering" in title_key or "cluster" in title_key:
-        icon_class, icon_color = "fa-solid fa-layer-group", "#3498db"
-    elif "content-based" in title_key or "cosine" in title_key or "cara kerja" in title_key:
-        icon_class, icon_color = "fa-solid fa-filter", "#2d9e5f"
-    elif "proporsi" in title_key or "waktu makan" in title_key:
-        icon_class, icon_color = "fa-solid fa-bowl-food", "#e67e22"
-    elif "evaluasi" in title_key:
-        icon_class, icon_color = "fa-solid fa-chart-line", "#9b59b6"
-    elif "ringkasan" in title_key:
-        icon_class, icon_color = "fa-solid fa-clipboard-list", "#3498db"
-    elif "target" in title_key or "sdgs" in title_key:
-        icon_class, icon_color = "fa-solid fa-users", "#2d9e5f"
-
-    st.markdown(
-        f'<div class="section-title"><span class="section-icon" style="color:{icon_color};"><i class="{icon_class}"></i></span><span>{title}</span></div>',
-        unsafe_allow_html=True,
-    )
+    st.markdown(f'<div class="section-title">{title}</div>', unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
 # PAGE: HOME
 # ═══════════════════════════════════════════
-if page == "🏠  Home":
-    hero("🍽️ PlatGizi", "Smart Menu Planner untuk Program Makan Bergizi Gratis (MBG)")
+if page == "Home":
+    hero("PlatGizi", "Smart Menu Planner untuk Program Makan Bergizi Gratis (MBG)")
 
     col1, col2 = st.columns([3, 2])
     with col1:
@@ -488,7 +420,7 @@ if page == "🏠  Home":
         with c1:
             st.markdown("""
             <div class="info-card">
-                <h4>🥗 Kandungan Gizi Makanan Indonesia</h4>
+                <h4>Kandungan Gizi Makanan Indonesia</h4>
                 <div style="font-size:0.85rem;color:#555;">Sumber: Kaggle<br>
                 <b style="color:#1a6b3c;">~1.345</b> jenis makanan dengan data kalori, protein, lemak, & karbohidrat</div>
             </div>
@@ -496,7 +428,7 @@ if page == "🏠  Home":
         with c2:
             st.markdown("""
             <div class="info-card">
-                <h4>🍳 Resep Masakan Indonesia</h4>
+                <h4>Resep Masakan Indonesia</h4>
                 <div style="font-size:0.85rem;color:#555;">Sumber: Kaggle<br>
                 <b style="color:#1a6b3c;">~16.000</b> resep dari 8 kategori bahan utama</div>
             </div>
@@ -507,14 +439,14 @@ if page == "🏠  Home":
         with s1:
             st.markdown("""
             <div class="info-card" style="border-left:4px solid #f5a623;">
-                <h4>🎯 SDG 2 – Zero Hunger</h4>
+                <h4>SDG 2 – Zero Hunger</h4>
                 <div style="font-size:0.85rem;color:#555;">Memastikan akses terhadap makanan bergizi yang cukup untuk semua kalangan</div>
             </div>
             """, unsafe_allow_html=True)
         with s2:
             st.markdown("""
             <div class="info-card" style="border-left:4px solid #3498db;">
-                <h4>🎯 SDG 3 – Good Health</h4>
+                <h4>SDG 3 – Good Health</h4>
                 <div style="font-size:0.85rem;color:#555;">Mendukung kesehatan dan kesejahteraan melalui pola makan bergizi seimbang</div>
             </div>
             """, unsafe_allow_html=True)
@@ -522,11 +454,11 @@ if page == "🏠  Home":
     with col2:
         section("Alur Project ML")
         steps = [
-            ("1", "📊 EDA", "Eksplorasi data mentah sebelum preprocessing"),
-            ("2", "⚙️ Preprocessing", "Bersihkan & siapkan kedua dataset"),
-            ("3", "🔵 K-Means Clustering", "Kelompokkan makanan berdasarkan profil gizi"),
-            ("4", "🎯 Content-Based Filtering", "Rekomendasikan menu sesuai target kalori/gizi"),
-            ("5", "🍽️ Demo", "Tampilkan hasil sebagai aplikasi web interaktif"),
+            ("1", "EDA", "Eksplorasi data mentah sebelum preprocessing"),
+            ("2", "Preprocessing", "Bersihkan & siapkan kedua dataset"),
+            ("3", "K-Means Clustering", "Kelompokkan makanan berdasarkan profil gizi"),
+            ("4", "Content-Based Filtering", "Rekomendasikan menu sesuai target kalori/gizi"),
+            ("5", "Demo", "Tampilkan hasil sebagai aplikasi web interaktif"),
         ]
         for num, title, desc in steps:
             st.markdown(f"""
@@ -541,10 +473,10 @@ if page == "🏠  Home":
 
         section("Target Pengguna")
         profiles = [
-            ("🧒", "SD Kelas 1–3", "1.400 kkal/hari"),
-            ("👦", "SD Kelas 4–6", "1.600 kkal/hari"),
-            ("🎓", "SMP/SMA", "2.000 kkal/hari"),
-            ("🤱", "Ibu Hamil/Menyusui", "2.200 kkal/hari"),
+            ("", "SD Kelas 1–3", "1.400 kkal/hari"),
+            ("", "SD Kelas 4–6", "1.600 kkal/hari"),
+            ("", "SMP/SMA", "2.000 kkal/hari"),
+            ("", "Ibu Hamil/Menyusui", "2.200 kkal/hari"),
         ]
         for icon, label, kal in profiles:
             st.markdown(f"""
@@ -562,8 +494,8 @@ if page == "🏠  Home":
 # ═══════════════════════════════════════════
 # PAGE: EDA
 # ═══════════════════════════════════════════
-elif page == "📊  Step 1: EDA":
-    hero("📊 Exploratory Data Analysis", "Memahami karakteristik data sebelum preprocessing", "🔍 Step 1 dari 5")
+elif page == "Step 1: EDA":
+    hero("Exploratory Data Analysis", "Memahami karakteristik data sebelum preprocessing", "Step 1 dari 5")
 
     st.markdown("""
     <div class="section-desc">
@@ -573,11 +505,11 @@ elif page == "📊  Step 1: EDA":
     """, unsafe_allow_html=True)
 
     if not model_loaded:
-        st.error("⚠️ Model tidak berhasil dimuat.")
+        st.error("Model tidak berhasil dimuat.")
         st.stop()
 
     # ── Statistik Deskriptif ──
-    section("📋 Statistik Deskriptif Dataset Gizi")
+    section("Statistik Deskriptif Dataset Gizi")
     stats = nutrition_df[['calories', 'proteins', 'fat', 'carbohydrate']].describe().round(2)
     stats.index = ['Count', 'Mean', 'Std', 'Min', '25%', 'Median', '75%', 'Max']
     stats.columns = ['Kalori (kkal)', 'Protein (g)', 'Lemak (g)', 'Karbohidrat (g)']
@@ -627,17 +559,17 @@ elif page == "📊  Step 1: EDA":
             """, unsafe_allow_html=True)
 
     # ── Visualisasi ──
-    section("📈 Distribusi Nilai Gizi Makanan")
+    section("Distribusi Nilai Gizi Makanan")
     if 'eda_distribusi' in imgs:
         st.image(imgs['eda_distribusi'], use_container_width=True)
     else:
-        st.info("📁 File `eda_distribusi.png` belum ditemukan. Pastikan file ada di folder yang sama dengan `app.py`.")
+        st.info("File eda_distribusi.png belum ditemukan. Pastikan file ada di folder yang sama dengan app.py.")
 
     section("Top 10 Makanan Tertinggi per Nutrisi")
     if 'eda_top10' in imgs:
         st.image(imgs['eda_top10'], use_container_width=True)
     else:
-        st.info("📁 File `eda_top10.png` belum ditemukan.")
+        st.info("File eda_top10.png belum ditemukan.")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -645,14 +577,14 @@ elif page == "📊  Step 1: EDA":
         if 'eda_korelasi' in imgs:
             st.image(imgs['eda_korelasi'], use_container_width=True)
         else:
-            st.info("📁 File `eda_korelasi.png` belum ditemukan.")
+            st.info("File eda_korelasi.png belum ditemukan.")
 
     with col2:
         section("Distribusi Resep per Kategori")
         if 'eda_resep' in imgs:
             st.image(imgs['eda_resep'], use_container_width=True)
         else:
-            st.info("📁 File `eda_resep.png` belum ditemukan.")
+            st.info("File eda_resep.png belum ditemukan.")
 
     # ── Insight ──
     section("Insight dari EDA")
@@ -671,7 +603,7 @@ elif page == "📊  Step 1: EDA":
     with i2:
         st.markdown(f"""
         <div class="info-card" style="border-left:4px solid #f39c12;">
-            <h4>🔗 Korelasi Gizi</h4>
+            <h4>Korelasi Gizi</h4>
             <div style="font-size:0.85rem;color:#555;">
                 Korelasi kalori–lemak: <b>{corr.loc['calories','fat']:.2f}</b><br>
                 Korelasi kalori–karbo: <b>{corr.loc['calories','carbohydrate']:.2f}</b><br>
@@ -682,7 +614,7 @@ elif page == "📊  Step 1: EDA":
     with i3:
         st.markdown("""
         <div class="info-card" style="border-left:4px solid #3498db;">
-            <h4>🍳 Variasi Resep</h4>
+            <h4>Variasi Resep</h4>
             <div style="font-size:0.85rem;color:#555;">
                 Dataset resep mencakup 8 kategori protein hewani & nabati.
                 Variasi ini memungkinkan sistem merekomendasikan menu yang beragam dan tidak monoton.
@@ -694,8 +626,8 @@ elif page == "📊  Step 1: EDA":
 # ═══════════════════════════════════════════
 # PAGE: PREPROCESSING
 # ═══════════════════════════════════════════
-elif page == "⚙️  Step 2: Preprocessing":
-    hero("⚙️ Data Preprocessing", "Membersihkan & menyiapkan data untuk model ML", "🔧 Step 2 dari 5")
+elif page == "Step 2: Preprocessing":
+    hero("Data Preprocessing", "Membersihkan & menyiapkan data untuk model ML", "Step 2 dari 5")
 
     st.markdown("""
     <div class="section-desc">
@@ -705,13 +637,13 @@ elif page == "⚙️  Step 2: Preprocessing":
     """, unsafe_allow_html=True)
 
     if not model_loaded:
-        st.error("⚠️ Model tidak berhasil dimuat.")
+        st.error("Model tidak berhasil dimuat.")
         st.stop()
 
     col1, col2 = st.columns(2)
 
     with col1:
-        section("🥗 Preprocessing Dataset Gizi")
+        section("Preprocessing Dataset Gizi")
         steps_gizi = [
             ("Hapus kolom tidak dipakai", "Kolom `id` dan `image` dihapus karena tidak relevan untuk ML"),
             ("Hapus baris gizi = 0", "Baris yang semua nilai gizinya 0 dianggap data tidak valid"),
@@ -735,7 +667,7 @@ elif page == "⚙️  Step 2: Preprocessing":
         # Stats before/after
         st.markdown("""
         <div class="info-card" style="background:#f8fdf4;">
-            <h4>📊 Hasil Preprocessing Gizi</h4>
+            <h4>Hasil Preprocessing Gizi</h4>
         """, unsafe_allow_html=True)
         mc1, mc2 = st.columns(2)
         with mc1:
@@ -745,7 +677,7 @@ elif page == "⚙️  Step 2: Preprocessing":
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col2:
-        section("🍳 Preprocessing Dataset Resep")
+        section("Preprocessing Dataset Resep")
         steps_resep = [
             ("Gabungkan 8 file CSV", "Semua file per kategori (ayam, ikan, tempe, dll) digabung jadi 1 DataFrame"),
             ("Tambah kolom kategori", "Kolom `kategori` ditambahkan sebagai label asal file"),
@@ -768,7 +700,7 @@ elif page == "⚙️  Step 2: Preprocessing":
 
         st.markdown("""
         <div class="info-card" style="background:#f8fdf4;">
-            <h4>📊 Hasil Preprocessing Resep</h4>
+            <h4>Hasil Preprocessing Resep</h4>
         """, unsafe_allow_html=True)
         mc1, mc2 = st.columns(2)
         with mc1:
@@ -778,7 +710,7 @@ elif page == "⚙️  Step 2: Preprocessing":
         st.markdown("</div>", unsafe_allow_html=True)
 
     # Sample data
-    section("🔍 Preview Data Hasil Preprocessing")
+    section("Preview Data Hasil Preprocessing")
     tab1, tab2 = st.tabs(["Dataset Gizi (nutrition_clean)", "Dataset Resep (resep_clean)"])
     with tab1:
         show_cols = ['name','calories','proteins','fat','carbohydrate','calories_norm','proteins_norm','fat_norm','carbo_norm']
@@ -788,7 +720,7 @@ elif page == "⚙️  Step 2: Preprocessing":
         show_cols2 = [c for c in ['Title','Ingredients','Loves','kategori'] if c in resep_df.columns]
         st.dataframe(resep_df[show_cols2].head(10), use_container_width=True)
 
-    section("💡 Mengapa Normalisasi Penting?")
+    section("Mengapa Normalisasi Penting?")
     st.markdown("""
     <div class="section-desc">
         Kalori memiliki rentang nilai <b>0–1000+ kkal</b>, sedangkan protein/lemak/karbo berada di <b>0–100 gram</b>.
@@ -801,8 +733,8 @@ elif page == "⚙️  Step 2: Preprocessing":
 # ═══════════════════════════════════════════
 # PAGE: CLUSTERING
 # ═══════════════════════════════════════════
-elif page == "🔵  Step 3: K-Means Clustering":
-    hero("🔵 K-Means Clustering", "Mengelompokkan makanan berdasarkan profil gizinya", "📐 Step 3 dari 5")
+elif page == "Step 3: K-Means Clustering":
+    hero("K-Means Clustering", "Mengelompokkan makanan berdasarkan profil gizinya", "Step 3 dari 5")
 
     st.markdown("""
     <div class="section-desc">
@@ -813,13 +745,13 @@ elif page == "🔵  Step 3: K-Means Clustering":
     """, unsafe_allow_html=True)
 
     if not model_loaded:
-        st.error("⚠️ Model tidak berhasil dimuat.")
+        st.error("Model tidak berhasil dimuat.")
         st.stop()
 
     col1, col2 = st.columns([3, 2])
 
     with col1:
-        section("📐 Pemilihan K Optimal (Elbow Method)")
+        section("Pemilihan K Optimal (Elbow Method)")
         st.markdown("""
         <div class="section-desc" style="margin-bottom:12px;">
             Elbow Method mencari nilai K terbaik dengan melihat titik "siku" — di mana penambahan cluster
@@ -829,16 +761,16 @@ elif page == "🔵  Step 3: K-Means Clustering":
         if 'elbow_plot' in imgs:
             st.image(imgs['elbow_plot'], use_container_width=True)
         else:
-            st.info("📁 File `elbow_plot.png` belum ditemukan.")
+            st.info("File elbow_plot.png belum ditemukan.")
 
-        section("🔵 Visualisasi Hasil Clustering")
+        section("Visualisasi Hasil Clustering")
         if 'cluster_plot' in imgs:
             st.image(imgs['cluster_plot'], use_container_width=True)
         else:
-            st.info("📁 File `cluster_plot.png` belum ditemukan.")
+            st.info("File cluster_plot.png belum ditemukan.")
 
     with col2:
-        section("📊 Evaluasi K-Means (K=4)")
+        section("Evaluasi K-Means (K=4)")
         evals = [
             ("Silhouette Score", "0.5039", "> 0.5 = Good", "#2d9e5f", "Mengukur seberapa mirip data dalam cluster vs cluster lain"),
             ("Davies-Bouldin Index", "0.8478", "< 1.0 = Baik", "#3498db", "Rasio jarak dalam cluster vs antar cluster (makin kecil makin baik)"),
@@ -857,12 +789,12 @@ elif page == "🔵  Step 3: K-Means Clustering":
             </div>
             """, unsafe_allow_html=True)
 
-        section("🏷️ Profil 4 Cluster")
+        section("Profil 4 Cluster")
         clusters = [
-            ("0", "🟢 Rendah Kalori", "#2d9e5f", "Rendah di semua nutrisi — sayuran, lalapan, buah segar"),
-            ("1", "🔴 Tinggi Lemak", "#e74c3c", "Kalori & lemak sangat tinggi — gorengan, santan, daging berlemak"),
-            ("2", "🟡 Tinggi Karbo", "#f39c12", "Karbo tinggi, kalori sedang — nasi, ubi, singkong, roti"),
-            ("3", "🔵 Tinggi Protein", "#3498db", "Protein tinggi, kalori sedang — ikan, ayam, tahu, tempe, telur"),
+            ("0", "Rendah Kalori", "#2d9e5f", "Rendah di semua nutrisi — sayuran, lalapan, buah segar"),
+            ("1", "Tinggi Lemak", "#e74c3c", "Kalori & lemak sangat tinggi — gorengan, santan, daging berlemak"),
+            ("2", "Tinggi Karbo", "#f39c12", "Karbo tinggi, kalori sedang — nasi, ubi, singkong, roti"),
+            ("3", "Tinggi Protein", "#3498db", "Protein tinggi, kalori sedang — ikan, ayam, tahu, tempe, telur"),
         ]
         for num, name, color, desc in clusters:
             st.markdown(f"""
@@ -879,8 +811,8 @@ elif page == "🔵  Step 3: K-Means Clustering":
 
     # Distribusi cluster
     if 'cluster' in nutrition_df.columns:
-        section("📊 Distribusi Makanan per Cluster")
-        cluster_names = {0: "🟢 Rendah Kalori", 1: "🔴 Tinggi Lemak", 2: "🟡 Tinggi Karbo", 3: "🔵 Tinggi Protein"}
+        section("Distribusi Makanan per Cluster")
+        cluster_names = {0: "Rendah Kalori", 1: "Tinggi Lemak", 2: "Tinggi Karbo", 3: "Tinggi Protein"}
         dist = nutrition_df['cluster'].value_counts().sort_index()
         cc = st.columns(4)
         for i, (cidx, count) in enumerate(dist.items()):
@@ -897,8 +829,8 @@ elif page == "🔵  Step 3: K-Means Clustering":
 # ═══════════════════════════════════════════
 # PAGE: CONTENT-BASED FILTERING
 # ═══════════════════════════════════════════
-elif page == "🎯  Step 4: Content-Based Filtering":
-    hero("🎯 Content-Based Filtering", "Merekomendasikan menu sesuai target kalori & gizi", "🤖 Step 4 dari 5")
+elif page == "Step 4: Content-Based Filtering":
+    hero("Content-Based Filtering", "Merekomendasikan menu sesuai target kalori & gizi", "Step 4 dari 5")
 
     st.markdown("""
     <div class="section-desc">
@@ -911,7 +843,7 @@ elif page == "🎯  Step 4: Content-Based Filtering":
     col1, col2 = st.columns([3, 2])
 
     with col1:
-        section("⚙️ Cara Kerja Sistem")
+        section("Cara Kerja Sistem")
         st.markdown("""
         <div class="info-card">
             <div style="font-family:monospace;font-size:0.85rem;color:#1d2b22;line-height:2.2;background:#f8fdf4;
@@ -932,7 +864,7 @@ elif page == "🎯  Step 4: Content-Based Filtering":
         </div>
         """, unsafe_allow_html=True)
 
-        section("🔢 Cosine Similarity")
+        section("Cosine Similarity")
         st.markdown("""
         <div class="section-desc">
             Cosine Similarity mengukur sudut antara dua vektor gizi — semakin kecil sudutnya (nilai mendekati 1),
@@ -945,11 +877,11 @@ elif page == "🎯  Step 4: Content-Based Filtering":
         </div>
         """, unsafe_allow_html=True)
 
-        section("🍽️ Proporsi Waktu Makan")
+        section("Proporsi Waktu Makan")
         meals = [
-            ("☀️ Sarapan", "25%", "#f5a623", "Target kalori × 0.25"),
-            ("🌤️ Makan Siang", "40%", "#2d9e5f", "Target kalori × 0.40"),
-            ("🌙 Makan Malam", "35%", "#4a6fa5", "Target kalori × 0.35"),
+            ("Sarapan", "25%", "#f5a623", "Target kalori × 0.25"),
+            ("Makan Siang", "40%", "#2d9e5f", "Target kalori × 0.40"),
+            ("Makan Malam", "35%", "#4a6fa5", "Target kalori × 0.35"),
         ]
         mc = st.columns(3)
         for i, (label, pct, color, desc) in enumerate(meals):
@@ -963,7 +895,7 @@ elif page == "🎯  Step 4: Content-Based Filtering":
                 """, unsafe_allow_html=True)
 
     with col2:
-        section("📊 Evaluasi Content-Based Filtering")
+        section("Evaluasi Content-Based Filtering")
         st.markdown("""
         <div class="section-desc" style="margin-bottom:12px;">
             Evaluasi menggunakan <b>Nutritional Coverage Rate</b> — seberapa % target gizi harian
@@ -972,10 +904,10 @@ elif page == "🎯  Step 4: Content-Based Filtering":
         """, unsafe_allow_html=True)
 
         profiles_eval = [
-            ("🧒 SD Kelas 1–3", 100.0, "#2d9e5f"),
-            ("👦 SD Kelas 4–6", 100.0, "#2d9e5f"),
-            ("🎓 SMP/SMA", 99.9, "#2d9e5f"),
-            ("🤱 Ibu Hamil/Menyusui", 98.6, "#f39c12"),
+            ("SD Kelas 1–3", 100.0, "#2d9e5f"),
+            ("SD Kelas 4–6", 100.0, "#2d9e5f"),
+            ("SMP/SMA", 99.9, "#2d9e5f"),
+            ("Ibu Hamil/Menyusui", 98.6, "#f39c12"),
         ]
         for label, score, color in profiles_eval:
             st.markdown(f"""
@@ -995,17 +927,17 @@ elif page == "🎯  Step 4: Content-Based Filtering":
         <div class="metric-card" style="margin-top:16px;border-top:4px solid #2d9e5f;">
             <div class="metric-num">99.6%</div>
             <div class="metric-unit">overall</div>
-            <div class="metric-label">✅ Rata-rata Coverage Semua Profil</div>
+            <div class="metric-label">Rata-rata Coverage Semua Profil</div>
         </div>
         """, unsafe_allow_html=True)
 
-        section("📋 Ringkasan Sistem")
+        section("Ringkasan Sistem")
         features = [
-            ("✅", "Metode", "Cosine Similarity"),
-            ("✅", "Profil tersedia", "4 profil pengguna"),
-            ("✅", "Waktu makan", "Sarapan, Siang, Malam"),
-            ("✅", "Variasi menu", "Tidak ada makanan sama dalam 1 hari"),
-            ("✅", "Menu mingguan", "Generate 7 hari sekaligus"),
+            ("", "Metode", "Cosine Similarity"),
+            ("", "Profil tersedia", "4 profil pengguna"),
+            ("", "Waktu makan", "Sarapan, Siang, Malam"),
+            ("", "Variasi menu", "Tidak ada makanan sama dalam 1 hari"),
+            ("", "Menu mingguan", "Generate 7 hari sekaligus"),
         ]
         for icon, key, val in features:
             st.markdown(f"""
@@ -1020,23 +952,23 @@ elif page == "🎯  Step 4: Content-Based Filtering":
 # ═══════════════════════════════════════════
 # PAGE: DEMO
 # ═══════════════════════════════════════════
-elif page == "🍽️  Step 5: Demo Rekomendasi":
-    hero("🍽️ Demo Rekomendasi Menu", "Generate menu bergizi harian & mingguan untuk berbagai profil", "🚀 Step 5 dari 5")
+elif page == "Step 5: Demo Rekomendasi":
+    hero("Demo Rekomendasi Menu", "Generate menu bergizi harian & mingguan untuk berbagai profil", "Step 5 dari 5")
 
     if not model_loaded:
-        st.error("⚠️ File `recommender.pkl` tidak ditemukan! Pastikan file ada di folder yang sama dengan `app.py`.")
+        st.error("File recommender.pkl tidak ditemukan. Pastikan file ada di folder yang sama dengan app.py.")
         st.stop()
 
     # FORM INPUT
-    st.markdown("### 👤 Pilih Profil Pengguna")
+    st.markdown("### Pilih Profil Pengguna")
     col1, col2, col3 = st.columns([2, 1, 1])
 
     with col1:
         profil_options = {
-            '🧒 Anak SD Kelas 1–3  (Usia 7–9 tahun)'   : 'SD Kelas 1-3',
-            '👦 Anak SD Kelas 4–6  (Usia 10–12 tahun)' : 'SD Kelas 4-6',
-            '🎓 Siswa SMP/SMA       (Usia 13–18 tahun)' : 'SMP/SMA',
-            '🤱 Ibu Hamil/Menyusui'                      : 'Ibu Hamil/Menyusui',
+            'Anak SD Kelas 1–3  (Usia 7–9 tahun)'   : 'SD Kelas 1-3',
+            'Anak SD Kelas 4–6  (Usia 10–12 tahun)' : 'SD Kelas 4-6',
+            'Siswa SMP/SMA       (Usia 13–18 tahun)' : 'SMP/SMA',
+            'Ibu Hamil/Menyusui'                      : 'Ibu Hamil/Menyusui',
         }
         pilihan_display = st.selectbox("Siapa yang akan makan?", options=list(profil_options.keys()))
         profil_key = profil_options[pilihan_display]
@@ -1053,18 +985,18 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
         target = PROFIL_GIZI[profil_key]
         st.markdown(f"""
         <div class="profil-card">
-            <h3>🎯 Target Harian</h3>
+            <h3>Target Harian</h3>
             <div style="font-size:0.85rem; color:#555; line-height:2.2">
-                🔥 <b>{target['kalori']}</b> kkal<br>
-                💪 <b>{target['protein']}g</b> protein<br>
-                💧 <b>{target['lemak']}g</b> lemak<br>
-                🌾 <b>{target['karbo']}g</b> karbo
+                Kalori: <b>{target['kalori']}</b> kkal<br>
+                Protein: <b>{target['protein']}g</b> protein<br>
+                Lemak: <b>{target['lemak']}g</b> lemak<br>
+                Karbo: <b>{target['karbo']}g</b> karbo
             </div>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    generate_btn = st.button("🍽️ Generate Menu Sekarang!", use_container_width=True)
+    generate_btn = st.button("Generate Menu Sekarang", use_container_width=True)
 
     if generate_btn:
         with st.spinner("Sedang menyusun menu terbaik untukmu..."):
@@ -1076,14 +1008,8 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
             'Makan Siang': 'linear-gradient(90deg,#1a6b3c,#2d9e5f)',
             'Makan Malam': 'linear-gradient(90deg,#2c3e7a,#4a6fa5)',
         }
-        WAKTU_ICON = {
-            'Sarapan'    : '☀️',
-            'Makan Siang': '🌤️',
-            'Makan Malam': '🌙',
-        }
-
         st.markdown("---")
-        st.markdown("### 📅 Hasil Rekomendasi Menu")
+        st.markdown("### Hasil Rekomendasi Menu")
 
         for idx, menu in enumerate(menu_list):
             hari_label = HARI_NAMES[idx] if jumlah_hari > 1 else "Hari Ini"
@@ -1100,7 +1026,6 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
                 with col_menu:
                     for waktu, isi in menu['menu'].items():
                         g        = isi['gizi']
-                        icon     = WAKTU_ICON.get(waktu, '🍴')
                         hdr_grad = WAKTU_COLOR.get(waktu, 'linear-gradient(90deg,#1a6b3c,#2d9e5f)')
                         karbo_s  = _h.escape(str(isi['karbo']))
                         prot_s   = _h.escape(str(isi['protein']))
@@ -1109,27 +1034,27 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
                         st.markdown(f"""
                         <div class="meal-card">
                             <div class="meal-card-header" style="background:{hdr_grad};">
-                                {icon}&nbsp;&nbsp;{waktu}
+                                {waktu}
                             </div>
                             <div class="meal-card-body">
                                 <div class="meal-col">
-                                    <div class="meal-col-label">🌾 Karbohidrat</div>
+                                    <div class="meal-col-label">Karbohidrat</div>
                                     <div class="meal-col-name">{karbo_s}</div>
                                 </div>
                                 <div class="meal-col">
-                                    <div class="meal-col-label">🍗 Protein</div>
+                                    <div class="meal-col-label">Protein</div>
                                     <div class="meal-col-name">{prot_s}</div>
                                 </div>
                                 <div class="meal-col">
-                                    <div class="meal-col-label">🥬 Sayuran</div>
+                                    <div class="meal-col-label">Sayuran</div>
                                     <div class="meal-col-name">{sayur_s}</div>
                                 </div>
                             </div>
                             <div class="meal-gizi-bar">
-                                🔥 {g['kalori']:.0f} kkal
-                                &nbsp;•&nbsp; 💪 Protein {g['protein']:.1f}g
-                                &nbsp;•&nbsp; 💧 Lemak {g['lemak']:.1f}g
-                                &nbsp;•&nbsp; 🌾 Karbo {g['karbo']:.1f}g
+                                Kalori {g['kalori']:.0f} kkal
+                                | Protein {g['protein']:.1f}g
+                                | Lemak {g['lemak']:.1f}g
+                                | Karbo {g['karbo']:.1f}g
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
@@ -1137,7 +1062,7 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
                 with col_gizi:
                     st.markdown("""
                     <div class="gizi-panel">
-                        <div class="gizi-panel-title">📊 Pemenuhan Gizi Harian</div>
+                        <div class="gizi-panel-title">Pemenuhan Gizi Harian</div>
                     """, unsafe_allow_html=True)
 
                     def gizi_bar(label, nilai, target_val, satuan, warna):
@@ -1158,25 +1083,25 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
                         </div>
                         """, unsafe_allow_html=True)
 
-                    gizi_bar('🔥 Kalori',  t['kalori'],  tgt['kalori'],  "kkal", "#2d9e5f")
-                    gizi_bar('💪 Protein', t['protein'], tgt['protein'], "g",    "#3498db")
-                    gizi_bar('💧 Lemak',   t['lemak'],   tgt['lemak'],   "g",    "#e67e22")
-                    gizi_bar('🌾 Karbo',   t['karbo'],   tgt['karbo'],   "g",    "#9b59b6")
+                    gizi_bar('Kalori',  t['kalori'],  tgt['kalori'],  "kkal", "#2d9e5f")
+                    gizi_bar('Protein', t['protein'], tgt['protein'], "g",    "#3498db")
+                    gizi_bar('Lemak',   t['lemak'],   tgt['lemak'],   "g",    "#e67e22")
+                    gizi_bar('Karbo',   t['karbo'],   tgt['karbo'],   "g",    "#9b59b6")
 
                     st.markdown("</div>", unsafe_allow_html=True)
 
                     avg_pct = (pct_kal + pct_prot + pct_lem + pct_karb) / 4
                     if avg_pct >= 75:
-                        st.success("✅ Gizi harian terpenuhi dengan baik!")
+                        st.success("Gizi harian terpenuhi dengan baik")
                     elif avg_pct >= 50:
-                        st.warning("⚠️ Gizi cukup, pertimbangkan tambahan camilan sehat.")
+                        st.warning("Gizi cukup, pertimbangkan tambahan camilan sehat")
                     else:
-                        st.error("❌ Gizi kurang tercukupi, tambahkan porsi makanan.")
+                        st.error("Gizi kurang tercukupi, tambahkan porsi makanan")
 
         # RINGKASAN
         if jumlah_hari > 1:
             st.markdown("---")
-            st.markdown("### 📈 Rata-rata Gizi Harian")
+            st.markdown("### Rata-rata Gizi Harian")
 
             avg_kal  = sum(m['total']['kalori']  for m in menu_list) / len(menu_list)
             avg_prot = sum(m['total']['protein'] for m in menu_list) / len(menu_list)
@@ -1185,10 +1110,10 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
 
             c1, c2, c3, c4 = st.columns(4)
             for col, label, nilai, satuan in [
-                (c1, '🔥 Kalori',  avg_kal,  "kkal"),
-                (c2, '💪 Protein', avg_prot, "gram"),
-                (c3, '💧 Lemak',   avg_lem,  "gram"),
-                (c4, '🌾 Karbo',   avg_karb, "gram"),
+                (c1, 'Kalori',  avg_kal,  "kkal"),
+                (c2, 'Protein', avg_prot, "gram"),
+                (c3, 'Lemak',   avg_lem,  "gram"),
+                (c4, 'Karbo',   avg_karb, "gram"),
             ]:
                 with col:
                     st.markdown(f"""
@@ -1202,9 +1127,9 @@ elif page == "🍽️  Step 5: Demo Rekomendasi":
 # FOOTER
 st.markdown("""
 <div class="footer">
-    🍽️ <b>PlatGizi</b> – Smart Menu Planner MBG &nbsp;|&nbsp;
+    <b>PlatGizi</b> – Smart Menu Planner MBG &nbsp;|&nbsp;
     Machine Learning Project &nbsp;|&nbsp;
     Binus University LC01 &nbsp;|&nbsp;
-    SDG 2 🌱 & SDG 3 💚
+    SDG 2 & SDG 3
 </div>
 """, unsafe_allow_html=True)
