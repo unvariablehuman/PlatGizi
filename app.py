@@ -686,18 +686,10 @@ elif page == "Step 2: Preprocessing":
                 st.dataframe(nutrition_raw.describe().round(2), use_container_width=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("**Pilih metode preprocessing:**")
-            na_handle = st.radio(
-                "NA Handle",
-                ["Median (Recommended)", "Mean", "Drop"],
-                horizontal=True,
-                key="na_handle_gizi"
-            )
             submitted = st.button("Submit & Preprocess!", use_container_width=True, key="submit_gizi")
 
             if submitted:
                 st.session_state["gizi_submitted"] = True
-                st.session_state["na_handle_gizi_selected"] = na_handle
         else:
             st.info("File nutrition.csv belum ditemukan di folder Preprocess Data.")
 
