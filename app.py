@@ -239,11 +239,18 @@ def load_recommender():
 def load_images():
     base = os.path.dirname(os.path.abspath(__file__))
     imgs = {}
+    search_dirs = [
+        base,
+        os.path.join(base, 'EDA pict'),
+        os.path.join(base, 'EDA_pict'),
+    ]
     for name in ['eda_distribusi', 'eda_top10', 'eda_korelasi', 'eda_resep',
                  'cluster_plot', 'elbow_plot']:
-        p = os.path.join(base, f'{name}.png')
-        if os.path.exists(p):
-            imgs[name] = p
+        for directory in search_dirs:
+            p = os.path.join(directory, f'{name}.png')
+            if os.path.exists(p):
+                imgs[name] = p
+                break
     return imgs
 
 try:
