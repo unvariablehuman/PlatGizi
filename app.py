@@ -23,6 +23,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
 html, body, [class*="css"] { font-family: 'Nunito', sans-serif; }
 .main { background-color: #f8fdf4; }
@@ -57,7 +58,13 @@ header {visibility: visible;}
     color: white;
     margin: 0;
     letter-spacing: -1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
 }
+.hero-title i { font-size: 0.92em; }
 .hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-top: 8px; }
 .hero-badge {
     display: inline-block;
@@ -69,6 +76,7 @@ header {visibility: visible;}
     font-size: 0.85rem;
     margin-top: 12px;
 }
+.hero-badge i { margin-right: 8px; }
 
 /* ── SECTION TITLE ── */
 .section-title {
@@ -78,6 +86,17 @@ header {visibility: visible;}
     border-left: 5px solid #2d9e5f;
     padding-left: 16px;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    line-height: 1.15;
+}
+.section-icon {
+    width: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 .section-desc {
     background: white;
@@ -349,7 +368,9 @@ def generate_menu_mingguan(profil, jumlah_hari=7):
 with st.sidebar:
     st.markdown("""
     <div style="text-align:center; padding: 16px 0 8px 0;">
-        <div style="font-family:'Playfair Display',serif; font-size:1.6rem; color:white; font-weight:700;">🍽️ PlatGizi</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.6rem; color:white; font-weight:700; display:flex; align-items:center; justify-content:center; gap:10px;">
+            <i class="fa-solid fa-utensils"></i><span>PlatGizi</span>
+        </div>
         <div style="font-size:0.75rem; color:rgba(255,255,255,0.7); margin-top:4px;">Smart Menu Planner MBG</div>
     </div>
     """, unsafe_allow_html=True)
@@ -381,17 +402,64 @@ with st.sidebar:
 # ─────────────────────────────────────────
 # HELPER
 # ─────────────────────────────────────────
-def hero(title, subtitle, badge="🤖 Powered by Machine Learning"):
+def hero(title, subtitle, badge="Powered by Machine Learning"):
+    title_key = title.lower()
+    hero_icon = "fa-solid fa-utensils"
+    if "eda" in title_key or "analysis" in title_key:
+        hero_icon = "fa-solid fa-chart-column"
+    elif "preprocessing" in title_key:
+        hero_icon = "fa-solid fa-gears"
+    elif "clustering" in title_key:
+        hero_icon = "fa-solid fa-circle-nodes"
+    elif "content" in title_key:
+        hero_icon = "fa-solid fa-filter"
+    elif "demo" in title_key:
+        hero_icon = "fa-solid fa-bowl-food"
+
     st.markdown(f"""
     <div class="hero-box">
-        <div class="hero-title">{title}</div>
+        <div class="hero-title"><i class="{hero_icon}"></i><span>{title}</span></div>
         <div class="hero-subtitle">{subtitle}</div>
-        <div class="hero-badge">{badge}</div>
+        <div class="hero-badge"><i class="fa-solid fa-wand-magic-sparkles"></i>{badge}</div>
     </div>
     """, unsafe_allow_html=True)
 
 def section(title):
-    st.markdown(f'<div class="section-title">{title}</div>', unsafe_allow_html=True)
+    title_key = title.lower()
+    icon_class = "fa-solid fa-circle-info"
+    icon_color = "#2d9e5f"
+
+    if "top 10" in title_key:
+        icon_class, icon_color = "fa-solid fa-trophy", "#f5a623"
+    elif "distribusi" in title_key or "statistik" in title_key:
+        icon_class, icon_color = "fa-solid fa-chart-column", "#3498db"
+    elif "korelasi" in title_key:
+        icon_class, icon_color = "fa-solid fa-fire-flame-curved", "#e74c3c"
+    elif "resep" in title_key:
+        icon_class, icon_color = "fa-solid fa-magnifying-glass", "#3498db"
+    elif "insight" in title_key:
+        icon_class, icon_color = "fa-solid fa-lightbulb", "#f39c12"
+    elif "preprocessing" in title_key or "normalisasi" in title_key:
+        icon_class, icon_color = "fa-solid fa-gears", "#2d9e5f"
+    elif "elbow" in title_key or "pemilihan k" in title_key:
+        icon_class, icon_color = "fa-solid fa-circle-nodes", "#f39c12"
+    elif "clustering" in title_key or "cluster" in title_key:
+        icon_class, icon_color = "fa-solid fa-layer-group", "#3498db"
+    elif "content-based" in title_key or "cosine" in title_key or "cara kerja" in title_key:
+        icon_class, icon_color = "fa-solid fa-filter", "#2d9e5f"
+    elif "proporsi" in title_key or "waktu makan" in title_key:
+        icon_class, icon_color = "fa-solid fa-bowl-food", "#e67e22"
+    elif "evaluasi" in title_key:
+        icon_class, icon_color = "fa-solid fa-chart-line", "#9b59b6"
+    elif "ringkasan" in title_key:
+        icon_class, icon_color = "fa-solid fa-clipboard-list", "#3498db"
+    elif "target" in title_key or "sdgs" in title_key:
+        icon_class, icon_color = "fa-solid fa-users", "#2d9e5f"
+
+    st.markdown(
+        f'<div class="section-title"><span class="section-icon" style="color:{icon_color};"><i class="{icon_class}"></i></span><span>{title}</span></div>',
+        unsafe_allow_html=True,
+    )
 
 
 # ═══════════════════════════════════════════
@@ -538,7 +606,7 @@ elif page == "📊  Step 1: EDA":
     with c1:
         st.markdown(f"""
         <div class="info-card">
-            <h4>🥗 Dataset Gizi</h4>
+            <h4>Dataset Gizi</h4>
             <div style="font-size:0.85rem;color:#555;">
                 Total makanan: <b style="color:#1a6b3c;">{len(nutrition_df)}</b> item<br>
                 Kalori min: <b>{nutrition_df['calories'].min():.0f}</b> kkal &nbsp;|&nbsp;
@@ -550,7 +618,7 @@ elif page == "📊  Step 1: EDA":
         if 'kategori' in resep_df.columns:
             st.markdown(f"""
             <div class="info-card">
-                <h4>🍳 Dataset Resep</h4>
+                <h4>Dataset Resep</h4>
                 <div style="font-size:0.85rem;color:#555;">
                     Total resep: <b style="color:#1a6b3c;">{len(resep_df)}</b> item<br>
                     Kategori: <b>{resep_df['kategori'].nunique()}</b> jenis bahan utama
@@ -565,7 +633,7 @@ elif page == "📊  Step 1: EDA":
     else:
         st.info("📁 File `eda_distribusi.png` belum ditemukan. Pastikan file ada di folder yang sama dengan `app.py`.")
 
-    section("🏆 Top 10 Makanan Tertinggi per Nutrisi")
+    section("Top 10 Makanan Tertinggi per Nutrisi")
     if 'eda_top10' in imgs:
         st.image(imgs['eda_top10'], use_container_width=True)
     else:
@@ -573,27 +641,27 @@ elif page == "📊  Step 1: EDA":
 
     col1, col2 = st.columns(2)
     with col1:
-        section("🔥 Korelasi Antar Nutrisi")
+        section("Korelasi Antar Nutrisi")
         if 'eda_korelasi' in imgs:
             st.image(imgs['eda_korelasi'], use_container_width=True)
         else:
             st.info("📁 File `eda_korelasi.png` belum ditemukan.")
 
     with col2:
-        section("🍳 Distribusi Resep per Kategori")
+        section("Distribusi Resep per Kategori")
         if 'eda_resep' in imgs:
             st.image(imgs['eda_resep'], use_container_width=True)
         else:
             st.info("📁 File `eda_resep.png` belum ditemukan.")
 
     # ── Insight ──
-    section("💡 Insight dari EDA")
+    section("Insight dari EDA")
     i1, i2, i3 = st.columns(3)
     corr = nutrition_df[['calories','proteins','fat','carbohydrate']].corr()
     with i1:
         st.markdown(f"""
         <div class="info-card" style="border-left:4px solid #e74c3c;">
-            <h4>📊 Distribusi Kalori</h4>
+            <h4>Distribusi Kalori</h4>
             <div style="font-size:0.85rem;color:#555;">
                 Data kalori <b>right-skewed</b> — sebagian besar makanan memiliki kalori rendah-sedang,
                 dengan beberapa outlier tinggi. Median ({nutrition_df['calories'].median():.0f} kkal) &lt; Mean ({nutrition_df['calories'].mean():.0f} kkal).
