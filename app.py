@@ -961,7 +961,7 @@ elif page == "Step 4: Content-Based Filtering":
 # PAGE: DEMO
 # ═══════════════════════════════════════════
 elif page == "Step 5: Demo Rekomendasi":
-    hero("Demo Rekomendasi Menu", "Generate menu bergizi harian & mingguan untuk berbagai profil", "Step 5 dari 5")
+    hero("PlatGizi", "Generate menu bergizi harian & mingguan untuk berbagai profil", "Step 5 dari 5")
 
     if not model_loaded:
         st.error("File recommender.pkl tidak ditemukan. Pastikan file ada di folder yang sama dengan app.py.")
@@ -991,17 +991,13 @@ elif page == "Step 5: Demo Rekomendasi":
 
     with col3:
         target = PROFIL_GIZI[profil_key]
-        st.markdown(f"""
-        <div class="profil-card">
-            <h3>Target Harian</h3>
-            <div style="font-size:0.85rem; color:#555; line-height:2.2">
-                Kalori: <b>{target['kalori']}</b> kkal<br>
-                Protein: <b>{target['protein']}g</b> protein<br>
-                Lemak: <b>{target['lemak']}g</b> lemak<br>
-                Karbo: <b>{target['karbo']}g</b> karbo
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        target_opts = [
+            f"Kalori: {target['kalori']} kkal",
+            f"Protein: {target['protein']}g protein",
+            f"Lemak: {target['lemak']}g lemak",
+            f"Karbo: {target['karbo']}g karbo",
+        ]
+        st.selectbox("Target Harian", options=target_opts, index=0)
 
     st.markdown("<br>", unsafe_allow_html=True)
     generate_btn = st.button("Generate Menu Sekarang", use_container_width=True)
