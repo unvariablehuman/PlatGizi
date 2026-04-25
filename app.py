@@ -796,18 +796,20 @@ elif page == "Step 3: K-Means Clustering":
             ("2", "Tinggi Karbo", "#f39c12", "Karbo tinggi, kalori sedang — nasi, ubi, singkong, roti"),
             ("3", "Tinggi Protein", "#3498db", "Protein tinggi, kalori sedang — ikan, ayam, tahu, tempe, telur"),
         ]
-        for num, name, color, desc in clusters:
-            st.markdown(f"""
-            <div class="info-card" style="padding:12px 14px;margin-bottom:8px;">
-                <div style="display:flex;align-items:center;margin-bottom:4px;">
-                    <span style="background:{color};color:white;border-radius:50%;width:22px;height:22px;
-                                 line-height:22px;text-align:center;font-size:0.7rem;font-weight:900;
-                                 margin-right:8px;flex-shrink:0;">{num}</span>
-                    <b style="color:#1d2b22;font-size:0.88rem;">{name}</b>
+        cluster_cols = st.columns(4)
+        for col, (num, name, color, desc) in zip(cluster_cols, clusters):
+            with col:
+                st.markdown(f"""
+                <div class="info-card" style="padding:14px 16px;margin-bottom:8px;height:100%;min-height:132px;">
+                    <div style="display:flex;align-items:center;margin-bottom:8px;gap:10px;">
+                        <span style="background:{color};color:white;border-radius:50%;width:22px;height:22px;
+                                     line-height:22px;text-align:center;font-size:0.7rem;font-weight:900;
+                                     flex-shrink:0;">{num}</span>
+                        <b style="color:#1d2b22;font-size:0.88rem;line-height:1.3;">{name}</b>
+                    </div>
+                    <div style="font-size:0.8rem;color:#666;line-height:1.6;">{desc}</div>
                 </div>
-                <div style="font-size:0.8rem;color:#666;padding-left:30px;">{desc}</div>
-            </div>
-            """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
     # Distribusi cluster
     if 'cluster' in nutrition_df.columns:
@@ -909,20 +911,19 @@ elif page == "Step 4: Content-Based Filtering":
             ("SMP/SMA", 99.9, "#2d9e5f"),
             ("Ibu Hamil/Menyusui", 98.6, "#f39c12"),
         ]
-        prof_cols = st.columns(4)
-        for col, (label, score, color) in zip(prof_cols, profiles_eval):
-            with col:
-                st.markdown(f"""
-                <div style="background:white;border:1px solid #e8f5ee;border-radius:16px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.04);height:100%;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;font-weight:700;color:#1d2b22;margin-bottom:10px;gap:12px;">
-                        <span style="line-height:1.35;">{label}</span>
-                        <span style="color:{color};white-space:nowrap;">{score}%</span>
-                    </div>
-                    <div style="background:#e8f5ee;border-radius:999px;height:10px;overflow:hidden;">
-                        <div style="background:{color};width:{score}%;height:10px;border-radius:999px;"></div>
-                    </div>
+        for label, score, color in profiles_eval:
+            st.markdown(f"""
+            <div style="margin-bottom:14px;">
+                <div style="display:flex;justify-content:space-between;font-size:0.85rem;
+                            font-weight:700;color:#1d2b22;margin-bottom:6px;">
+                    <span>{label}</span>
+                    <span style="color:{color};">{score}%</span>
                 </div>
-                """, unsafe_allow_html=True)
+                <div style="background:#e8f5ee;border-radius:999px;height:10px;overflow:hidden;">
+                    <div style="background:{color};width:{score}%;height:10px;border-radius:999px;"></div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
         st.markdown("""
         <div class="metric-card" style="margin-top:16px;border-top:4px solid #2d9e5f;">
