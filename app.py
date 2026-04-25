@@ -842,11 +842,6 @@ elif page == "Step 4: Content-Based Filtering":
     </div>
     """, unsafe_allow_html=True)
 
-    col1, col2 = st.columns([3, 2])
-
-    with col1:
-        section("Cara Kerja Sistem")
-        st.markdown("""
     # Layouting for Step 4
     col1, col2 = st.columns([3, 2])
 
