@@ -476,7 +476,6 @@ if page == "Home":
             ("", "SD Kelas 1–3", "1.400 kkal/hari"),
             ("", "SD Kelas 4–6", "1.600 kkal/hari"),
             ("", "SMP/SMA", "2.000 kkal/hari"),
-            ("", "Ibu Hamil/Menyusui", "2.200 kkal/hari"),
         ]
         for icon, label, kal in profiles:
             st.markdown(f"""
@@ -1009,7 +1008,7 @@ elif page == "Step 4: Content-Based Filtering":
         <div class="info-card">
             <div style="font-family:monospace;font-size:0.85rem;color:#1d2b22;line-height:2.2;background:#f8fdf4;
                         padding:16px;border-radius:8px;border:1px solid #e8f5ee;">
-                User pilih profil (Anak SD / SMP / Ibu Menyusui)<br>
+            User pilih profil (Anak SD / SMP/SMA)<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
                 Sistem tentukan <b>target kalori & gizi harian</b><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
@@ -1051,7 +1050,6 @@ elif page == "Step 4: Content-Based Filtering":
             ("SD Kelas 1–3", 100.0, "#2d9e5f"),
             ("SD Kelas 4–6", 100.0, "#2d9e5f"),
             ("SMP/SMA", 99.9, "#2d9e5f"),
-            ("Ibu Hamil/Menyusui", 98.6, "#f39c12"),
         ]
         for label, score, color in profiles_eval:
             st.markdown(f"""
@@ -1134,7 +1132,6 @@ elif page == "Step 5: Demo Rekomendasi":
             'Anak SD Kelas 1–3  (Usia 7–9 tahun)'   : 'SD Kelas 1-3',
             'Anak SD Kelas 4–6  (Usia 10–12 tahun)' : 'SD Kelas 4-6',
             'Siswa SMP/SMA       (Usia 13–18 tahun)' : 'SMP/SMA',
-            'Ibu Hamil/Menyusui'                      : 'Ibu Hamil/Menyusui',
         }
         pilihan_display = st.selectbox("Siapa yang akan makan?", options=list(profil_options.keys()))
         profil_key = profil_options[pilihan_display]
