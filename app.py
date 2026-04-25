@@ -789,27 +789,27 @@ elif page == "Step 3: K-Means Clustering":
             </div>
             """, unsafe_allow_html=True)
 
-        section("Profil 4 Cluster")
-        clusters = [
-            ("0", "Rendah Kalori", "#2d9e5f", "Rendah di semua nutrisi — sayuran, lalapan, buah segar"),
-            ("1", "Tinggi Lemak", "#e74c3c", "Kalori & lemak sangat tinggi — gorengan, santan, daging berlemak"),
-            ("2", "Tinggi Karbo", "#f39c12", "Karbo tinggi, kalori sedang — nasi, ubi, singkong, roti"),
-            ("3", "Tinggi Protein", "#3498db", "Protein tinggi, kalori sedang — ikan, ayam, tahu, tempe, telur"),
-        ]
-        cluster_cols = st.columns(4)
-        for col, (num, name, color, desc) in zip(cluster_cols, clusters):
-            with col:
-                st.markdown(f"""
-                <div class="info-card" style="padding:14px 16px;margin-bottom:8px;height:100%;min-height:132px;">
-                    <div style="display:flex;align-items:center;margin-bottom:8px;gap:10px;">
-                        <span style="background:{color};color:white;border-radius:50%;width:22px;height:22px;
-                                     line-height:22px;text-align:center;font-size:0.7rem;font-weight:900;
-                                     flex-shrink:0;">{num}</span>
-                        <b style="color:#1d2b22;font-size:0.88rem;line-height:1.3;">{name}</b>
-                    </div>
-                    <div style="font-size:0.8rem;color:#666;line-height:1.6;">{desc}</div>
+    section("Profil 4 Cluster")
+    clusters = [
+        ("0", "Rendah Kalori", "#2d9e5f", "Rendah di semua nutrisi — sayuran, lalapan, buah segar"),
+        ("1", "Tinggi Lemak", "#e74c3c", "Kalori & lemak sangat tinggi — gorengan, santan, daging berlemak"),
+        ("2", "Tinggi Karbo", "#f39c12", "Karbo tinggi, kalori sedang — nasi, ubi, singkong, roti"),
+        ("3", "Tinggi Protein", "#3498db", "Protein tinggi, kalori sedang — ikan, ayam, tahu, tempe, telur"),
+    ]
+    cluster_cols = st.columns(4)
+    for col, (num, name, color, desc) in zip(cluster_cols, clusters):
+        with col:
+            st.markdown(f"""
+            <div class="info-card" style="padding:14px 16px;margin-bottom:8px;height:100%;min-height:132px;">
+                <div style="display:flex;align-items:center;margin-bottom:8px;gap:10px;">
+                    <span style="background:{color};color:white;border-radius:50%;width:22px;height:22px;
+                                 line-height:22px;text-align:center;font-size:0.7rem;font-weight:900;
+                                 flex-shrink:0;">{num}</span>
+                    <b style="color:#1d2b22;font-size:0.88rem;line-height:1.3;">{name}</b>
                 </div>
-                """, unsafe_allow_html=True)
+                <div style="font-size:0.8rem;color:#666;line-height:1.6;">{desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
     # Distribusi cluster
     if 'cluster' in nutrition_df.columns:
