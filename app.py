@@ -5,16 +5,7 @@ import pickle
 import random
 import os
 import html as _h
-import base64
 from sklearn.metrics.pairwise import cosine_similarity
-
-@st.cache_data
-def get_pdf_base64(file_path):
-    try:
-        with open(file_path, "rb") as f:
-            return base64.b64encode(f.read()).decode('utf-8')
-    except:
-        return None
 
 # ─────────────────────────────────────────
 # PAGE CONFIG
@@ -509,11 +500,9 @@ if page == "Home":
                 </div>
                 """, unsafe_allow_html=True)
             
-            pdf_b64 = get_pdf_base64("static/Permenkes-No-28-Tahun-2019-Angka-Kecukupan-Gizi-yang-Dianjurkan.pdf")
-            pdf_link = f"data:application/pdf;base64,{pdf_b64}" if pdf_b64 else "#"
             st.markdown(f"""
             <div style="margin-top:4px; text-align:right;">
-                <a href="{pdf_link}" target="_blank" style="font-size:0.75rem; color:#2d9e5f; text-decoration:none; font-weight:600;">Lihat Sumber Data (PDF)</a>
+                <a href="https://stunting.go.id/kemenkes-permenkes-no-28-tahun-2019-angka-kecukupan-gizi-yang-dianjurkan/?btwaf=61114740" target="_blank" style="font-size:0.75rem; color:#2d9e5f; text-decoration:none; font-weight:600;">Lihat Sumber Data (PDF)</a>
             </div>
             """, unsafe_allow_html=True)
 
