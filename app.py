@@ -11,7 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 # PAGE CONFIG
 # ─────────────────────────────────────────
 st.set_page_config(
-    page_title="PlatGizi – Smart Menu Planner MBG",
+    page_title="PlatGizi – Smart Menu Planner",
     page_icon="PG",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -350,7 +350,7 @@ with st.sidebar:
     st.markdown("""
     <div style="text-align:center; padding: 16px 0 8px 0;">
         <div style="font-family:'Playfair Display',serif; font-size:1.6rem; color:white; font-weight:700;">PlatGizi</div>
-        <div style="font-size:0.75rem; color:rgba(255,255,255,0.7); margin-top:4px;">Smart Menu Planner MBG</div>
+        <div style="font-size:0.75rem; color:rgba(255,255,255,0.7); margin-top:4px;">Smart Menu Planner</div>
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
@@ -398,19 +398,20 @@ def section(title):
 # PAGE: HOME
 # ═══════════════════════════════════════════
 if page == "Home":
-    hero("PlatGizi", "Smart Menu Planner untuk Program Makan Bergizi Gratis (MBG)")
+    hero("PlatGizi", "Sistem Perencana Menu Pintar untuk Pola Hidup Sehat & Gizi Seimbang")
 
     col1, col2 = st.columns([3, 2])
     with col1:
         section("Tentang Project")
         st.markdown("""
         <div class="section-desc">
-            <b>PlatGizi</b> adalah sistem rekomendasi menu makanan harian berbasis Machine Learning yang dirancang
-            untuk mendukung Program <b>Makan Bergizi Gratis (MBG)</b> dari pemerintah Indonesia.<br><br>
-            Sistem ini menggabungkan dua algoritma utama:
+            <b>PlatGizi</b> adalah sistem cerdas berbasis Machine Learning yang dirancang untuk menjadi asisten pribadi Anda dalam merencanakan menu makanan harian secara otomatis. 
+            Fokus utama dari aplikasi ini adalah untuk memastikan setiap pengguna mendapatkan rekomendasi menu yang tidak hanya lezat dan bervariasi, tetapi juga seimbang secara nutrisi, 
+            sesuai dengan kebutuhan spesifik dan target kalori harian mereka. Platform ini diciptakan untuk mempermudah gaya hidup sehat tanpa perlu repot menghitung kalori manual setiap harinya.<br><br>
+            Untuk menghasilkan rekomendasi terbaik, sistem ini memadukan dua algoritma utama:
             <ul>
-                <li><b>K-Means Clustering</b> — mengelompokkan makanan berdasarkan profil gizinya</li>
-                <li><b>Content-Based Filtering</b> — merekomendasikan kombinasi menu yang sesuai target kalori & gizi per profil pengguna</li>
+                <li><b>K-Means Clustering</b> — menganalisis dan mengelompokkan ribuan jenis bahan makanan berdasarkan profil nutrisinya (kalori, protein, lemak, dan karbohidrat) guna memastikan keseimbangan sumber gizi.</li>
+                <li><b>Content-Based Filtering</b> — memberikan rekomendasi kombinasi menu optimal yang dirakit secara presisi agar sesuai dengan target kalori dan proporsi gizi harian bagi setiap profil pengguna.</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -1316,7 +1317,7 @@ elif page == "Step 5: Demo Rekomendasi":
 # FOOTER
 st.markdown("""
 <div class="footer">
-    <b>PlatGizi</b> – Smart Menu Planner MBG &nbsp;|&nbsp;
+    <b>PlatGizi</b> – Smart Menu Planner &nbsp;|&nbsp;
     Machine Learning Project &nbsp;|&nbsp;
     Binus University LC01 &nbsp;|&nbsp;
     SDG 2 & SDG 3
