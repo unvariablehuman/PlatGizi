@@ -499,6 +499,11 @@ if page == "Home":
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
+            st.markdown(f"""
+            <div style="margin-top:4px; text-align:right;">
+                <a href="https://github.com/unvariablehuman/PlatGizi/raw/main/Permenkes-No-28-Tahun-2019-Angka-Kecukupan-Gizi-yang-Dianjurkan.pdf" target="_blank" style="font-size:0.75rem; color:#2d9e5f; text-decoration:none; font-weight:600;">📂 Lihat Sumber Data (PDF)</a>
+            </div>
+            """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
