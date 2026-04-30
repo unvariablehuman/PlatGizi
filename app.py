@@ -229,7 +229,7 @@ div.stButton > button:hover {
 # LOAD MODEL
 # ─────────────────────────────────────────
 @st.cache_resource
-def load_recommender():
+def load_recommender_v2():
     base = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(base, 'recommender.pkl')
     with open(path, 'rb') as f:
@@ -254,7 +254,7 @@ def load_images():
     return imgs
 
 try:
-    rec          = load_recommender()
+    rec          = load_recommender_v2()
     nutrition_df = rec['nutrition_df']
     resep_df     = rec['resep_df']
     scaler       = rec['scaler']
