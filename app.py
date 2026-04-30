@@ -560,7 +560,8 @@ elif page == "Step 1: EDA":
                     <h4>Dataset Resep</h4>
                     <div style="font-size:0.85rem;color:#555;">
                         Total resep: <b style="color:#1a6b3c;">{len(resep_df)}</b> item<br>
-                        Kategori: <b>{resep_df['kategori'].nunique()}</b> jenis bahan utama
+                        Kategori:<br>
+                        {resep_df['kategori'].value_counts().to_string().replace(chr(10), '<br>')}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -896,7 +897,7 @@ elif page == "Step 3: K-Means Clustering":
     st.markdown("""
     <div class="section-desc">
         <b>K-Means</b> adalah algoritma unsupervised learning yang mengelompokkan data menjadi <b>K cluster</b>
-        berdasarkan kemiripan karakteristiknya. Pada project ini, 1.346 makanan dikelompokkan berdasarkan
+        berdasarkan kemiripan karakteristiknya. Pada project ini, makanan dikelompokkan berdasarkan
         4 fitur gizi: kalori, protein, lemak, dan karbohidrat (setelah dinormalisasi).
     </div>
     """, unsafe_allow_html=True)
