@@ -363,8 +363,8 @@ def generate_menu_mingguan(profil, jumlah_hari=7):
 with st.sidebar:
     st.markdown("""
     <div style="text-align:center; padding: 16px 0 8px 0;">
-        <div style="font-family:'Playfair Display',serif; font-size:1.6rem; color:white; font-weight:700;">PlatGizi</div>
-        <div style="font-size:0.75rem; color:rgba(255,255,255,0.7); margin-top:4px;">Smart Menu Planner</div>
+        <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:white; font-weight:700;">PlatGizi</div>
+        <div style="font-size:0.85rem; color:rgba(255,255,255,0.7); margin-top:4px;">Smart Menu Planner</div>
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
