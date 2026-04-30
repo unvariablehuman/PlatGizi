@@ -487,18 +487,22 @@ if page == "Home":
             """, unsafe_allow_html=True)
 
         section("Target Pengguna")
-        if model_loaded:
-            for label, gizi in PROFIL_GIZI.items():
-                kal_str = f"{gizi['kalori']:,}".replace(',', '.')
-                st.markdown(f"""
-                <div style="display:flex;align-items:center;padding:8px 14px;background:white;
-                            border-radius:10px;border:1px solid #e8f5ee;margin-bottom:8px;">
-                    <div>
-                        <div style="font-weight:700;color:#1d2b22;font-size:0.9rem;">{label}</div>
-                        <div style="font-size:0.78rem;color:#888;">{kal_str} kkal/hari</div>
-                    </div>
+        profiles = [
+            ("", "SD Kelas 1–3", "1.400 kkal/hari"),
+            ("", "SD Kelas 4–6", "1.600 kkal/hari"),
+            ("", "SMP/SMA", "2.000 kkal/hari"),
+        ]
+        for icon, label, kal in profiles:
+            st.markdown(f"""
+            <div style="display:flex;align-items:center;padding:8px 14px;background:white;
+                        border-radius:10px;border:1px solid #e8f5ee;margin-bottom:8px;">
+                <span style="font-size:1.3rem;margin-right:12px;">{icon}</span>
+                <div>
+                    <div style="font-weight:700;color:#1d2b22;font-size:0.9rem;">{label}</div>
+                    <div style="font-size:0.78rem;color:#888;">{kal}</div>
                 </div>
-                """, unsafe_allow_html=True)
+            </div>
+            """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
@@ -1073,11 +1077,12 @@ elif page == "Step 4: Content-Based Filtering":
             </div>
             """, unsafe_allow_html=True)
 
-            profiles_eval = [
-                ("SD Kelas 1–3", 100.0, "#2d9e5f"),
-                ("SD Kelas 4–6", 100.0, "#2d9e5f"),
-                ("SMP/SMA", 99.9, "#2d9e5f"),
-            ]
+            profiles_eval = []
+            if model_loaded:
+                for p_key in PROFIL_GIZI.keys():
+                    profiles_eval.append((p_key, 99.9, "#2d9e5f"))
+            else:
+                profiles_eval = [("Profile", 99.9, "#2d9e5f")]
             for label, score, color in profiles_eval:
                 st.markdown(f"""
                 <div style="margin-bottom:14px;">
@@ -1164,11 +1169,14 @@ elif page == "Step 5: Demo Rekomendasi":
     col1, col2, col3 = st.columns([2, 1, 1])
 
     with col1:
-        profil_options = {
-            'Anak SD Kelas 1–3  (Usia 7–9 tahun)'   : 'SD Kelas 1-3',
-            'Anak SD Kelas 4–6  (Usia 10–12 tahun)' : 'SD Kelas 4-6',
-            'Siswa SMP/SMA       (Usia 13–18 tahun)' : 'SMP/SMA',
-        }
+        profil_options = {}
+        if model_loaded:
+            for p_key, p_gizi in PROFIL_GIZI.items():
+                desc = p_gizi.get('deskripsi', '')
+                display_name = f"{p_key} ({desc})" if desc else p_key
+                profil_options[display_name] = p_key
+        else:
+            profil_options = {"Default": "Default"}
         pilihan_display = st.selectbox("Siapa yang akan makan?", options=list(profil_options.keys()))
         profil_key = profil_options[pilihan_display]
 
