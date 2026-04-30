@@ -487,22 +487,18 @@ if page == "Home":
             """, unsafe_allow_html=True)
 
         section("Target Pengguna")
-        profiles = [
-            ("", "SD Kelas 1–3", "1.400 kkal/hari"),
-            ("", "SD Kelas 4–6", "1.600 kkal/hari"),
-            ("", "SMP/SMA", "2.000 kkal/hari"),
-        ]
-        for icon, label, kal in profiles:
-            st.markdown(f"""
-            <div style="display:flex;align-items:center;padding:8px 14px;background:white;
-                        border-radius:10px;border:1px solid #e8f5ee;margin-bottom:8px;">
-                <span style="font-size:1.3rem;margin-right:12px;">{icon}</span>
-                <div>
-                    <div style="font-weight:700;color:#1d2b22;font-size:0.9rem;">{label}</div>
-                    <div style="font-size:0.78rem;color:#888;">{kal}</div>
+        if model_loaded:
+            for label, gizi in PROFIL_GIZI.items():
+                kal_str = f"{gizi['kalori']:,}".replace(',', '.')
+                st.markdown(f"""
+                <div style="display:flex;align-items:center;padding:8px 14px;background:white;
+                            border-radius:10px;border:1px solid #e8f5ee;margin-bottom:8px;">
+                    <div>
+                        <div style="font-weight:700;color:#1d2b22;font-size:0.9rem;">{label}</div>
+                        <div style="font-size:0.78rem;color:#888;">{kal_str} kkal/hari</div>
+                    </div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
