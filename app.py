@@ -1071,8 +1071,9 @@ elif page == "Step 4: Content-Based Filtering":
             section("Evaluasi Content-Based Filtering")
             st.markdown("""
             <div class="section-desc" style="margin-bottom:12px;">
-                Evaluasi menggunakan <b>Nutritional Coverage Rate</b> — seberapa % target gizi harian
-                yang berhasil dipenuhi oleh menu yang di-generate, dirata-rata dari 10 variasi menu per profil.
+                <b>1. Nutritional Coverage</b> — rata-rata pemenuhan target gizi harian.<br>
+                <b>2. Nutrient Balance (WHO)</b> — keseimbangan proporsi makronutrien sesuai standar WHO.<br>
+                <b>3. Diversity Score</b> — rasio keberagaman menu, 1.0 berarti menu sangat bervariasi tanpa duplikasi.
             </div>
             """, unsafe_allow_html=True)
 
@@ -1086,7 +1087,7 @@ elif page == "Step 4: Content-Based Filtering":
                 <div style="margin-bottom:14px;">
                     <div style="display:flex;justify-content:space-between;font-size:0.85rem;
                                 font-weight:700;color:#1d2b22;margin-bottom:6px;">
-                        <span>{label}</span>
+                        <span>Coverage: {label}</span>
                         <span style="color:{color};">{score}%</span>
                     </div>
                     <div style="background:#e8f5ee;border-radius:999px;height:10px;overflow:hidden;">
@@ -1096,10 +1097,19 @@ elif page == "Step 4: Content-Based Filtering":
                 """, unsafe_allow_html=True)
 
             st.markdown("""
-            <div class="metric-card" style="margin-top:16px;border-top:4px solid #2d9e5f;">
-                <div class="metric-num">99.6%</div>
-                <div class="metric-unit">overall</div>
-                <div class="metric-label">Rata-rata Coverage Semua Profil</div>
+            <div style="display:flex; gap:10px; margin-top:16px;">
+                <div class="metric-card" style="flex:1; border-top:4px solid #2d9e5f; padding: 12px 10px;">
+                    <div class="metric-num" style="font-size:1.3rem;">99.9%</div>
+                    <div class="metric-label" style="font-size:0.75rem;">Avg Coverage</div>
+                </div>
+                <div class="metric-card" style="flex:1; border-top:4px solid #f5a623; padding: 12px 10px;">
+                    <div class="metric-num" style="font-size:1.3rem;">100%</div>
+                    <div class="metric-label" style="font-size:0.75rem;">Nutrient Balance</div>
+                </div>
+                <div class="metric-card" style="flex:1; border-top:4px solid #4a6fa5; padding: 12px 10px;">
+                    <div class="metric-num" style="font-size:1.3rem;">1.00</div>
+                    <div class="metric-label" style="font-size:0.75rem;">Diversity Score</div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
