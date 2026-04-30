@@ -1202,12 +1202,15 @@ elif page == "Step 5: Demo Rekomendasi":
 
     st.markdown("<br>", unsafe_allow_html=True)
     if st.button("Generate Menu", use_container_width=True):
-        st.session_state["run_demo"] = True
-
-    if st.session_state.get("run_demo", False):
         with st.spinner("Sedang menyusun menu terbaik untukmu..."):
-            st.success("Tugas selesai dijalankan!")
-            menu_list = generate_menu_mingguan(profil_key, jumlah_hari)
+            st.session_state["menu_list"] = generate_menu_mingguan(profil_key, jumlah_hari)
+            st.session_state["run_demo"] = True
+            st.session_state["last_gen_days"] = jumlah_hari
+
+    if st.session_state.get("run_demo", False) and st.session_state.get("menu_list") is not None:
+        st.success("Tugas selesai dijalankan!")
+        menu_list = st.session_state["menu_list"]
+        disp_days = st.session_state.get("last_gen_days", 1)
 
         HARI_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
         WAKTU_COLOR = {
@@ -1219,7 +1222,7 @@ elif page == "Step 5: Demo Rekomendasi":
         st.markdown("### Hasil Rekomendasi Menu")
 
         for idx, menu in enumerate(menu_list):
-            hari_label = HARI_NAMES[idx] if jumlah_hari > 1 else "Hari Ini"
+            hari_label = HARI_NAMES[idx] if disp_days > 1 else "Hari Ini"
             t   = menu['total']
             tgt = menu['target']
             pct_kal  = min(t['kalori']  / tgt['kalori']  * 100, 100)
