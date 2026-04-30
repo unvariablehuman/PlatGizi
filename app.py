@@ -423,7 +423,7 @@ if page == "Home":
             <div class="info-card">
                 <h4>Kandungan Gizi Makanan Indonesia</h4>
                 <div style="font-size:0.85rem;color:#555;">Sumber: <a href="https://www.kaggle.com/datasets/anasfikrihanif/indonesian-food-and-drink-nutrition-dataset" target="_blank" style="color:#2d9e5f;text-decoration:none;"><b>Kaggle</b></a><br>
-                <b style="color:#1a6b3c;">~1.345</b> jenis makanan dengan data kalori, protein, lemak, & karbohidrat</div>
+                <b style="color:#1a6b3c;">1.346</b> jenis makanan dengan data kalori, protein, lemak, & karbohidrat</div>
             </div>
             """, unsafe_allow_html=True)
         with c2:
@@ -431,7 +431,7 @@ if page == "Home":
             <div class="info-card">
                 <h4>Resep Masakan Indonesia</h4>
                 <div style="font-size:0.85rem;color:#555;">Sumber: <a href="https://www.kaggle.com/datasets/canggih/indonesian-food-recipes" target="_blank" style="color:#2d9e5f;text-decoration:none;"><b>Kaggle</b></a><br>
-                <b style="color:#1a6b3c;">~16.000</b> resep dari 8 kategori bahan utama</div>
+                <b style="color:#1a6b3c;">15641</b> resep dari 8 kategori bahan utama</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -691,24 +691,18 @@ elif page == "Step 2: Preprocessing":
 
                 t1, t2, t3 = st.tabs(["Data Preview", "Data Null", "Data Count"])
                 with t1:
-                    st.dataframe(nutrition_raw.head(10), use_container_width=True)
+                    st.dataframe(nutrition_raw, use_container_width=True)
                 with t2:
                     null_df = nutrition_raw.isnull().sum().reset_index()
                     null_df.columns = ["Kolom", "Jumlah Null"]
                     st.dataframe(null_df, use_container_width=True)
                 with t3:
                     st.dataframe(nutrition_raw.describe().round(2), use_container_width=True)
-
-                st.markdown("<br>", unsafe_allow_html=True)
-                submitted = st.button("Submit & Preprocess!", use_container_width=True, key="submit_gizi")
-
-                if submitted:
-                    st.session_state["gizi_submitted"] = True
             else:
                 st.info("File nutrition.csv belum ditemukan di folder Preprocess Data.")
 
         with tab_clean:
-            if csv_loaded and st.session_state.get("gizi_submitted", False):
+            if csv_loaded:
                 st.success("Data preprocessing berhasil dimuat.")
                 st.markdown(f"""
                 <div class="info-card" style="margin-bottom:12px;">
@@ -723,21 +717,19 @@ elif page == "Step 2: Preprocessing":
 
                 t1, t2, t3 = st.tabs(["Data Preview", "Scaled Data", "Data Null"])
                 with t1:
-                    st.dataframe(nutrition_clean.head(10), use_container_width=True)
+                    st.dataframe(nutrition_clean, use_container_width=True)
                 with t2:
                     norm_cols = [c for c in nutrition_clean.columns if "_norm" in c]
                     cols_scaled = ["name"] + norm_cols if "name" in nutrition_clean.columns else norm_cols
-                    st.dataframe(nutrition_clean[cols_scaled].head(10), use_container_width=True)
+                    st.dataframe(nutrition_clean[cols_scaled], use_container_width=True)
                 with t3:
                     null_df2 = nutrition_clean.isnull().sum().reset_index()
                     null_df2.columns = ["Kolom", "Jumlah Null"]
                     st.dataframe(null_df2, use_container_width=True)
-            elif not csv_loaded:
-                st.info("File nutrition_clean.csv belum ditemukan di folder Preprocess Data.")
             else:
-                st.info("Klik Submit & Preprocess! di tab Raw Data untuk melihat hasil preprocessing.")
+                st.info("File nutrition_clean.csv belum ditemukan di folder Preprocess Data.")
 
-        if csv_loaded and st.session_state.get("gizi_submitted", False):
+        if csv_loaded:
             section("Before vs After - Dataset Gizi")
             c1, c2, c3, c4 = st.columns(4)
             deltas = [
@@ -785,7 +777,7 @@ elif page == "Step 2: Preprocessing":
 
                 t1, t2, t3 = st.tabs(["Data Preview", "Data Null", "Per Kategori"])
                 with t1:
-                    st.dataframe(resep_raw.head(10), use_container_width=True)
+                    st.dataframe(resep_raw, use_container_width=True)
                 with t2:
                     null_r = resep_raw.isnull().sum().reset_index()
                     null_r.columns = ["Kolom", "Jumlah Null"]
@@ -795,16 +787,11 @@ elif page == "Step 2: Preprocessing":
                         cat_count = resep_raw["kategori"].value_counts().reset_index()
                         cat_count.columns = ["Kategori", "Jumlah"]
                         st.dataframe(cat_count, use_container_width=True)
-
-                st.markdown("<br>", unsafe_allow_html=True)
-                submitted2 = st.button("Submit & Preprocess!", use_container_width=True, key="submit_resep")
-                if submitted2:
-                    st.session_state["resep_submitted"] = True
             else:
                 st.info("File resep_raw.csv belum ditemukan di folder Preprocess Data.")
 
         with tab_clean2:
-            if csv_loaded and st.session_state.get("resep_submitted", False):
+            if csv_loaded:
                 st.success("Data preprocessing berhasil dimuat.")
                 st.markdown(f"""
                 <div class="info-card" style="margin-bottom:12px;">
@@ -819,7 +806,7 @@ elif page == "Step 2: Preprocessing":
 
                 t1, t2, t3 = st.tabs(["Data Preview", "Data Null", "Per Kategori"])
                 with t1:
-                    st.dataframe(resep_clean.head(10), use_container_width=True)
+                    st.dataframe(resep_clean, use_container_width=True)
                 with t2:
                     null_r2 = resep_clean.isnull().sum().reset_index()
                     null_r2.columns = ["Kolom", "Jumlah Null"]
@@ -829,12 +816,10 @@ elif page == "Step 2: Preprocessing":
                         cat_count2 = resep_clean["kategori"].value_counts().reset_index()
                         cat_count2.columns = ["Kategori", "Jumlah"]
                         st.dataframe(cat_count2, use_container_width=True)
-            elif not csv_loaded:
-                st.info("File resep_clean.csv belum ditemukan di folder Preprocess Data.")
             else:
-                st.info("Klik Submit & Preprocess! di tab Raw Data untuk melihat hasil preprocessing.")
+                st.info("File resep_clean.csv belum ditemukan di folder Preprocess Data.")
 
-        if csv_loaded and st.session_state.get("resep_submitted", False):
+        if csv_loaded:
             section("Before vs After - Dataset Resep")
             c1, c2, c3, c4 = st.columns(4)
             deltas2 = [
