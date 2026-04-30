@@ -419,7 +419,7 @@ if page == "Home":
         section("Tentang Project")
         st.markdown("""
         <div class="section-desc">
-            <b>PlatGizi</b> adalah sistem cerdas berbasis Machine Learning yang dirancang untuk menjadi asisten pribadi Anda dalam merencanakan menu makanan harian secara otomatis. 
+            <b>PlatGizi</b> adalah sistem cerdas berbasis Machine Learning yang dirancang untuk menjadi asisten pribadi dalam merencanakan menu makanan harian secara otomatis. 
             Fokus utama dari aplikasi ini adalah untuk memastikan setiap pengguna mendapatkan rekomendasi menu yang tidak hanya lezat dan bervariasi, tetapi juga seimbang secara nutrisi, 
             sesuai dengan kebutuhan spesifik dan target kalori harian mereka. Platform ini diciptakan untuk mempermudah gaya hidup sehat tanpa perlu repot menghitung kalori manual setiap harinya.<br><br>
             Untuk menghasilkan rekomendasi terbaik, sistem ini memadukan dua algoritma utama:
@@ -514,7 +514,7 @@ elif page == "Step 1: EDA":
     st.markdown("""
     <div class="section-desc">
         EDA dilakukan untuk memahami <b>distribusi, pola, dan karakteristik</b> data mentah sebelum masuk ke tahap preprocessing.
-        Dengan EDA, kita bisa mengidentifikasi nilai kosong, outlier, dan insight awal yang berguna untuk proses selanjutnya.
+        Melalui EDA, dapat diidentifikasi nilai kosong, outlier, dan insight awal yang berguna untuk proses selanjutnya.
     </div>
     """, unsafe_allow_html=True)
 
@@ -1134,7 +1134,7 @@ elif page == "Step 4: Content-Based Filtering":
         section("Ringkasan Sistem")
         features = [
             ("", "Metode", "Cosine Similarity"),
-            ("", "Profil tersedia", "4 profil pengguna"),
+            ("", "Profil tersedia", "3 profil pengguna"),
             ("", "Waktu makan", "Sarapan, Siang, Malam"),
             ("", "Variasi menu", "Tidak ada makanan sama dalam 1 hari"),
             ("", "Menu mingguan", "Generate 7 hari sekaligus"),
@@ -1157,7 +1157,7 @@ elif page == "Step 4: Content-Based Filtering":
 # PAGE: DEMO
 # ═══════════════════════════════════════════
 elif page == "Step 5: Demo Rekomendasi":
-    hero("PlatGizi", "Generate menu bergizi harian & mingguan untuk berbagai profil", "Step 5 dari 5")
+    hero("PlatGizi", "Generate menu bergizi harian & mingguan", "Step 5 dari 5")
 
     if not model_loaded:
         st.error("File recommender.pkl tidak ditemukan. Pastikan file ada di folder yang sama dengan app.py.")
