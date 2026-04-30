@@ -501,7 +501,7 @@ if page == "Home":
                 """, unsafe_allow_html=True)
             st.markdown(f"""
             <div style="margin-top:4px; text-align:right;">
-                <a href="https://github.com/unvariablehuman/PlatGizi/blob/main/Permenkes-No-28-Tahun-2019-Angka-Kecukupan-Gizi-yang-Dianjurkan.pdf" target="_blank" style="font-size:0.75rem; color:#2d9e5f; text-decoration:none; font-weight:600;">Lihat Sumber Data (PDF)</a>
+                <a href="static/Permenkes-No-28-Tahun-2019-Angka-Kecukupan-Gizi-yang-Dianjurkan.pdf" target="_blank" style="font-size:0.75rem; color:#2d9e5f; text-decoration:none; font-weight:600;">Lihat Sumber Data (PDF)</a>
             </div>
             """, unsafe_allow_html=True)
 
