@@ -1072,7 +1072,7 @@ elif page == "Step 4: Content-Based Filtering":
             st.markdown("""
             <div class="section-desc" style="margin-bottom:12px;">
                 <b>1. Nutritional Coverage</b> — rata-rata pemenuhan target gizi harian.<br>
-                <b>2. Nutrient Balance (WHO)</b> — keseimbangan proporsi makronutrien sesuai standar WHO.<br>
+                <b>2. Nutrient Balance</b> — keseimbangan proporsi makronutrien sesuai standar WHO.<br>
                 <b>3. Diversity Score</b> — rasio keberagaman menu, 1.0 berarti menu sangat bervariasi tanpa duplikasi.
             </div>
             """, unsafe_allow_html=True)
@@ -1100,7 +1100,7 @@ elif page == "Step 4: Content-Based Filtering":
             st.markdown("""
             <div style="display:flex; gap:10px; margin-top:16px;">
                 <div class="metric-card" style="flex:1; border-top:4px solid #2d9e5f; padding: 12px 10px;">
-                    <div class="metric-num" style="font-size:1.3rem;">99.9%</div>
+                    <div class="metric-num" style="font-size:1.3rem;">98.5%</div>
                     <div class="metric-label" style="font-size:0.75rem;">Avg Coverage</div>
                 </div>
                 <div class="metric-card" style="flex:1; border-top:4px solid #f5a623; padding: 12px 10px;">
