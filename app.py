@@ -437,7 +437,7 @@ if page == "Home":
             <div class="info-card">
                 <h4>Kandungan Gizi Makanan Indonesia</h4>
                 <div style="font-size:0.85rem;color:#555;">Sumber: <a href="https://www.kaggle.com/datasets/anasfikrihanif/indonesian-food-and-drink-nutrition-dataset" target="_blank" style="color:#2d9e5f;text-decoration:none;"><b>Kaggle</b></a><br>
-                <b style="color:#1a6b3c;">1.346</b> jenis makanan dengan data kalori, protein, lemak, & karbohidrat</div>
+                <b style="color:#1a6b3c;">1346</b> jenis makanan dengan data kalori, protein, lemak, & karbohidrat</div>
             </div>
             """, unsafe_allow_html=True)
         with c2:
