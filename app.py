@@ -266,6 +266,20 @@ except Exception as e:
 
 imgs = load_images()
 
+@st.cache_data
+def load_raw_data_global():
+    base = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(base, "Preprocess Data")
+    nutrition_raw = pd.read_csv(os.path.join(data_dir, "nutrition.csv"))
+    resep_raw = pd.read_csv(os.path.join(data_dir, "resep_raw.csv"))
+    return nutrition_raw, resep_raw
+
+try:
+    nutrition_raw_global, resep_raw_global = load_raw_data_global()
+    raw_global_loaded = True
+except Exception:
+    raw_global_loaded = False
+
 
 # ─────────────────────────────────────────
 # FUNGSI REKOMENDASI
@@ -517,26 +531,27 @@ elif page == "Step 1: EDA":
 
         # ── Statistik Deskriptif ──
         section("Statistik Deskriptif Dataset Gizi")
-        stats = nutrition_df[['calories', 'proteins', 'fat', 'carbohydrate']].describe().round(2)
-        stats.index = ['Count', 'Mean', 'Std', 'Min', '25%', 'Median', '75%', 'Max']
-        stats.columns = ['Kalori (kkal)', 'Protein (g)', 'Lemak (g)', 'Karbohidrat (g)']
+        if raw_global_loaded:
+            stats = nutrition_raw_global[['calories', 'proteins', 'fat', 'carbohydrate']].describe().round(2)
+            stats.index = ['Count', 'Mean', 'Std', 'Min', '25%', 'Median', '75%', 'Max']
+            stats.columns = ['Kalori (kkal)', 'Protein (g)', 'Lemak (g)', 'Karbohidrat (g)']
 
-        c1, c2, c3, c4 = st.columns(4)
-        metrics = [
-            (c1, f"{int(nutrition_df['calories'].mean())}", "kkal", "Rata-rata Kalori"),
-            (c2, f"{nutrition_df['proteins'].mean():.1f}", "gram", "Rata-rata Protein"),
-            (c3, f"{nutrition_df['fat'].mean():.1f}", "gram", "Rata-rata Lemak"),
-            (c4, f"{nutrition_df['carbohydrate'].mean():.1f}", "gram", "Rata-rata Karbo"),
-        ]
-        for col, num, unit, label in metrics:
-            with col:
-                st.markdown(f"""
-                <div class="metric-card">
-                    <div class="metric-num">{num}</div>
-                    <div class="metric-unit">{unit}</div>
-                    <div class="metric-label">{label}</div>
-                </div>
-                """, unsafe_allow_html=True)
+            c1, c2, c3, c4 = st.columns(4)
+            metrics = [
+                (c1, f"{int(nutrition_raw_global['calories'].mean())}", "kkal", "Rata-rata Kalori"),
+                (c2, f"{nutrition_raw_global['proteins'].mean():.1f}", "gram", "Rata-rata Protein"),
+                (c3, f"{nutrition_raw_global['fat'].mean():.1f}", "gram", "Rata-rata Lemak"),
+                (c4, f"{nutrition_raw_global['carbohydrate'].mean():.1f}", "gram", "Rata-rata Karbo"),
+            ]
+            for col, num, unit, label in metrics:
+                with col:
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <div class="metric-num">{num}</div>
+                        <div class="metric-unit">{unit}</div>
+                        <div class="metric-label">{label}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.dataframe(stats, use_container_width=True)
@@ -547,21 +562,21 @@ elif page == "Step 1: EDA":
             <div class="info-card">
                 <h4>Dataset Gizi</h4>
                 <div style="font-size:0.85rem;color:#555;">
-                    Total makanan: <b style="color:#1a6b3c;">{len(nutrition_df)}</b> item<br>
-                    Kalori min: <b>{nutrition_df['calories'].min():.0f}</b> kkal &nbsp;|&nbsp;
-                    Kalori max: <b>{nutrition_df['calories'].max():.0f}</b> kkal
+                    Total makanan: <b style="color:#1a6b3c;">{len(nutrition_raw_global)}</b> item<br>
+                    Kalori min: <b>{nutrition_raw_global['calories'].min():.0f}</b> kkal &nbsp;|&nbsp;
+                    Kalori max: <b>{nutrition_raw_global['calories'].max():.0f}</b> kkal
                 </div>
             </div>
             """, unsafe_allow_html=True)
         with c2:
-            if 'kategori' in resep_df.columns:
+            if 'kategori' in resep_raw_global.columns:
                 st.markdown(f"""
                 <div class="info-card">
                     <h4>Dataset Resep</h4>
                     <div style="font-size:0.85rem;color:#555;">
-                        Total resep: <b style="color:#1a6b3c;">{len(resep_df)}</b> item<br>
+                        Total resep: <b style="color:#1a6b3c;">{len(resep_raw_global)}</b> item<br>
                         Kategori:<br>
-                        {resep_df['kategori'].value_counts().to_string().replace(chr(10), '<br>')}
+                        {resep_raw_global['kategori'].value_counts().to_string().replace(chr(10), '<br>')}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -597,14 +612,14 @@ elif page == "Step 1: EDA":
         # ── Insight ──
         section("Insight dari EDA")
         i1, i2, i3 = st.columns(3)
-        corr = nutrition_df[['calories','proteins','fat','carbohydrate']].corr()
+        corr = nutrition_raw_global[['calories','proteins','fat','carbohydrate']].corr()
         with i1:
             st.markdown(f"""
             <div class="info-card" style="border-left:4px solid #e74c3c;">
                 <h4>Distribusi Kalori</h4>
                 <div style="font-size:0.85rem;color:#555;">
                     Data kalori <b>right-skewed</b> — sebagian besar makanan memiliki kalori rendah-sedang,
-                    dengan beberapa outlier tinggi. Median ({nutrition_df['calories'].median():.0f} kkal) &lt; Mean ({nutrition_df['calories'].mean():.0f} kkal).
+                    dengan beberapa outlier tinggi. Median ({nutrition_raw_global['calories'].median():.0f} kkal) &lt; Mean ({nutrition_raw_global['calories'].mean():.0f} kkal).
                 </div>
             </div>
             """, unsafe_allow_html=True)
