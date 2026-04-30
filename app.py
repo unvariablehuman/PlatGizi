@@ -1192,13 +1192,17 @@ elif page == "Step 5: Demo Rekomendasi":
 
     with col3:
         target = PROFIL_GIZI[profil_key]
-        target_opts = [
-            f"Kalori: {target['kalori']} kkal",
-            f"Protein: {target['protein']}g protein",
-            f"Lemak: {target['lemak']}g lemak",
-            f"Karbo: {target['karbo']}g karbo",
-        ]
-        st.selectbox("Target Harian", options=target_opts, index=0)
+        st.markdown(f"""
+        <div style="background: white; border-radius: 10px; padding: 10px 14px; border: 1px solid #e8f5ee; height: 100%;">
+            <div style="font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing:0.5px;">Target Gizi</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                <div style="font-size: 0.82rem; color:#1a6b3c;">🔥 <b>{target['kalori']}</b> <span style="font-size:0.7rem;color:#999;">kkal</span></div>
+                <div style="font-size: 0.82rem; color:#1a6b3c;">🥩 <b>{target['protein']}</b><span style="font-size:0.7rem;color:#999;">g</span></div>
+                <div style="font-size: 0.82rem; color:#1a6b3c;">🥑 <b>{target['lemak']}</b><span style="font-size:0.7rem;color:#999;">g</span></div>
+                <div style="font-size: 0.82rem; color:#1a6b3c;">🍞 <b>{target['karbo']}</b><span style="font-size:0.7rem;color:#999;">g</span></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
     if st.button("Generate Menu", use_container_width=True):
