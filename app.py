@@ -578,7 +578,7 @@ elif page == "Step 1: EDA":
                     <div style="font-size:0.85rem;color:#555;">
                         Total resep: <b style="color:#1a6b3c;">{len(resep_raw_global)}</b> item<br>
                         Kategori:<br>
-                        {resep_raw_global['kategori'].value_counts().to_string().replace(chr(10), '<br>')}
+                        {resep_raw_global['kategori'].value_counts().rename_axis(None).to_string().replace(chr(10), '<br>')}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
