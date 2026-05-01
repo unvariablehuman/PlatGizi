@@ -788,7 +788,7 @@ elif page == "Step 2: Preprocessing":
                         <span><b>{resep_raw.shape[0]}</b> baris</span>
                         <span><b>{resep_raw.shape[1]}</b> kolom</span>
                         <span><b>{resep_raw.isnull().sum().sum()}</b> nilai kosong</span>
-                        <span><b>{resep_raw.duplicated().sum()}</b> duplikat</span>
+                        <span><b>{resep_raw.duplicated(subset=['Title']).sum() if 'Title' in resep_raw.columns else resep_raw.duplicated().sum()}</b> duplikat judul</span>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -817,7 +817,7 @@ elif page == "Step 2: Preprocessing":
                         <span><b>{resep_clean.shape[0]}</b> baris</span>
                         <span><b>{resep_clean.shape[1]}</b> kolom</span>
                         <span><b>{resep_clean.isnull().sum().sum()}</b> nilai kosong</span>
-                        <span><b>{resep_clean.duplicated().sum()}</b> duplikat</span>
+                        <span><b>{resep_clean.duplicated(subset=['Title']).sum() if 'Title' in resep_clean.columns else resep_clean.duplicated().sum()}</b> duplikat judul</span>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
