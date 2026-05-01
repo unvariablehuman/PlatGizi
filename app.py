@@ -844,7 +844,10 @@ elif page == "Step 2: Preprocessing":
                 (c1, "Jumlah Baris", resep_raw.shape[0], resep_clean.shape[0], "baris"),
                 (c2, "Jumlah Kolom", resep_raw.shape[1], resep_clean.shape[1], "kolom"),
                 (c3, "Nilai Kosong", resep_raw.isnull().sum().sum(), resep_clean.isnull().sum().sum(), "cells"),
-                (c4, "Duplikat", resep_raw.duplicated().sum(), resep_clean.duplicated().sum(), "baris"),
+                (c4, "Duplikat Judul", 
+                 resep_raw.duplicated(subset=['Title']).sum() if 'Title' in resep_raw.columns else resep_raw.duplicated().sum(),
+                 resep_clean.duplicated(subset=['Title']).sum() if 'Title' in resep_clean.columns else resep_clean.duplicated().sum(), 
+                 "resep"),
             ]
             for col, label, before, after, unit in deltas2:
                 with col:
