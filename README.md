@@ -1,6 +1,6 @@
-# 🍽️ PlatGizi – Smart Menu Planner MBG
+# 🍽️ PlatGizi – Smart Menu Planner
 
-> Sistem Rekomendasi Menu Bergizi Harian berbasis Machine Learning untuk mendukung Program **Makan Bergizi Gratis (MBG)** — SDG 2
+> Sistem Perencana Menu Pintar untuk Pola Hidup Sehat & Gizi Seimbang berbasis Machine Learning — SDG 2 & 3
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://platgizi.streamlit.app)
 
@@ -8,7 +8,7 @@
 
 ## 📌 Deskripsi Project
 
-**PlatGizi** adalah aplikasi web interaktif yang merekomendasikan menu makanan harian bergizi seimbang menggunakan algoritma Machine Learning. Sistem ini dirancang khusus untuk mendukung program **Makan Bergizi Gratis (MBG)** pemerintah Indonesia dengan mempertimbangkan kebutuhan kalori dan gizi berbagai kelompok pengguna.
+**PlatGizi** adalah sistem cerdas berbasis Machine Learning yang dirancang untuk menjadi asisten pribadi dalam merencanakan menu makanan harian secara otomatis. Fokus utama dari aplikasi ini adalah untuk memastikan setiap pengguna mendapatkan rekomendasi menu yang tidak hanya lezat dan bervariasi, tetapi juga seimbang secara nutrisi, sesuai dengan kebutuhan spesifik dan target kalori harian mereka.
 
 ### 🎯 SDGs yang Didukung
 - **SDG 2** – Zero Hunger (Tanpa Kelaparan)
@@ -46,14 +46,13 @@
 
 ## 👤 Profil Pengguna & Target Gizi
 
-| Profil | Kalori | Protein | Lemak | Karbo |
-|--------|--------|---------|-------|-------|
+| Profil | Target Kalori | Protein | Lemak | Karbohidrat |
+|--------|---------------|---------|-------|-------------|
 | 🧒 Anak SD Kelas 1–3 | 1.400 kkal | 35g | 40g | 220g |
 | 👦 Anak SD Kelas 4–6 | 1.600 kkal | 40g | 45g | 250g |
 | 🎓 Siswa SMP/SMA | 1.800 kkal | 50g | 50g | 280g |
-| 🤱 Ibu Hamil/Menyusui | 2.100 kkal | 60g | 60g | 320g |
 
-*Sumber: Angka Kecukupan Gizi (AKG) Kemenkes RI 2019*
+*Sumber: [Permenkes No. 28 Tahun 2019 – Angka Kecukupan Gizi (AKG)](https://stunting.go.id/kemenkes-permenkes-no-28-tahun-2019-angka-kecukupan-gizi-yang-dianjurkan/)*
 
 ---
 
