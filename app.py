@@ -384,10 +384,17 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("""
-    <div style="font-size:0.72rem; color:rgba(255,255,255,0.55); text-align:center; line-height:1.8;">
-        Machine Learning Project<br>
-        Binus University · LC01<br>
-        SDG 2 & SDG 3
+    <div style="padding: 0 10px;">
+        <div style="font-size:0.8rem; color:white; font-weight:700; margin-bottom:8px; opacity:0.9;">Kelompok 1 • LC01</div>
+        <div style="font-size:0.7rem; color:rgba(255,255,255,0.6); line-height:1.6;">
+            1. Sabrina Arfanindia D<br>
+            2. Herlinda Angelica Tanjaya<br>
+            3. Kristian Novan
+        </div>
+        <div style="margin-top:12px; font-size:0.65rem; color:rgba(255,255,255,0.4); text-align:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px;">
+            Machine Learning Project<br>
+            Binus University · SDG 2 & 3
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -505,6 +512,28 @@ if page == "Home":
                 <a href="https://stunting.go.id/kemenkes-permenkes-no-28-tahun-2019-angka-kecukupan-gizi-yang-dianjurkan/?btwaf=61114740" target="_blank" style="font-size:0.75rem; color:#2d9e5f; text-decoration:none; font-weight:600;">Lihat Sumber Data (PDF)</a>
             </div>
             """, unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        section("Tim Project")
+        st.markdown("""
+        <div class="info-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8fdf4 100%);">
+            <b style="color:#1a6b3c; font-size:1rem; display:block; margin-bottom:10px;">Kelompok 1 - LC01</b>
+            <table style="width:100%; font-size:0.85rem; color:#444; border-collapse:collapse;">
+                <tr style="border-bottom:1px solid #e8f5ee;">
+                    <td style="padding:8px 0; font-weight:600;">Sabrina Arfanindia D</td>
+                    <td style="padding:8px 0; text-align:right; color:#888;">2802448755</td>
+                </tr>
+                <tr style="border-bottom:1px solid #e8f5ee;">
+                    <td style="padding:8px 0; font-weight:600;">Herlinda Angelica Tanjaya</td>
+                    <td style="padding:8px 0; text-align:right; color:#888;">2802397754</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; font-weight:600;">Kristian Novan</td>
+                    <td style="padding:8px 0; text-align:right; color:#888;">2802458560</td>
+                </tr>
+            </table>
+        </div>
+        """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
@@ -1352,7 +1381,7 @@ st.markdown("""
 <div class="footer">
     <b>PlatGizi</b> – Smart Menu Planner &nbsp;|&nbsp;
     Machine Learning Project &nbsp;|&nbsp;
-    Binus University LC01 &nbsp;|&nbsp;
+    Kelompok 1 - Binus University LC01 &nbsp;|&nbsp;
     SDG 2 & SDG 3
 </div>
 """, unsafe_allow_html=True)
