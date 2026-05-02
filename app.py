@@ -456,38 +456,6 @@ if page == "Home":
             </div>
             """, unsafe_allow_html=True)
 
-        section("SDGs yang Relevan")
-        st.markdown("""
-        <div class="info-card" style="border-left:4px solid #f5a623;">
-            <h4>SDG 2 – Zero Hunger</h4>
-            <div style="font-size:0.85rem;color:#555;">Memastikan akses terhadap makanan bergizi yang cukup untuk semua kalangan</div>
-        </div>
-        <div class="info-card" style="border-left:4px solid #3498db;">
-            <h4>SDG 3 – Good Health</h4>
-            <div style="font-size:0.85rem;color:#555;">Mendukung kesehatan dan kesejahteraan melalui pola makan bergizi seimbang</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        section("Tim Project")
-        st.markdown("""
-        <div class="info-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8fdf4 100%);">
-            <b style="color:#1a6b3c; font-size:1rem; display:block; margin-bottom:10px;">Kelompok 1 - LC01</b>
-            <table style="width:100%; font-size:0.85rem; color:#444; border-collapse:collapse;">
-                <tr style="border-bottom:1px solid #e8f5ee;">
-                    <td style="padding:8px 0; font-weight:600;">Sabrina Arfanindia D</td>
-                    <td style="padding:8px 0; text-align:right; color:#888;">2802448755</td>
-                </tr>
-                <tr style="border-bottom:1px solid #e8f5ee;">
-                    <td style="padding:8px 0; font-weight:600;">Herlinda Angelica Tanjaya</td>
-                    <td style="padding:8px 0; text-align:right; color:#888;">2802397754</td>
-                </tr>
-                <tr>
-                    <td style="padding:8px 0; font-weight:600;">Kristian Novan</td>
-                    <td style="padding:8px 0; text-align:right; color:#888;">2802458560</td>
-                </tr>
-            </table>
-        </div>
-        """, unsafe_allow_html=True)
 
     with col2:
         section("Alur Project ML")
@@ -528,6 +496,46 @@ if page == "Home":
                 <a href="https://stunting.go.id/kemenkes-permenkes-no-28-tahun-2019-angka-kecukupan-gizi-yang-dianjurkan/?btwaf=61114740" target="_blank" style="font-size:0.75rem; color:#2d9e5f; text-decoration:none; font-weight:600;">Lihat Sumber Data (PDF)</a>
             </div>
             """, unsafe_allow_html=True)
+
+    # ── FULL WIDTH BOTTOM SECTION ──
+    st.markdown("<br>", unsafe_allow_html=True)
+    section("SDGs yang Relevan")
+    s1, s2 = st.columns(2)
+    with s1:
+        st.markdown("""
+        <div class="info-card" style="border-left:4px solid #f5a623; height:100%;">
+            <h4>SDG 2 – Zero Hunger</h4>
+            <div style="font-size:0.85rem;color:#555;">Memastikan akses terhadap makanan bergizi yang cukup untuk semua kalangan melalui perencanaan menu yang efisien.</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with s2:
+        st.markdown("""
+        <div class="info-card" style="border-left:4px solid #3498db; height:100%;">
+            <h4>SDG 3 – Good Health</h4>
+            <div style="font-size:0.85rem;color:#555;">Mendukung kesehatan dan kesejahteraan masyarakat dengan memastikan asupan gizi harian yang seimbang dan tepat sasaran.</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    section("Tim Project")
+    st.markdown("""
+    <div class="info-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8fdf4 100%);">
+        <b style="color:#1a6b3c; font-size:1rem; display:block; margin-bottom:10px;">Kelompok 1 - LC01</b>
+        <table style="width:100%; font-size:0.85rem; color:#444; border-collapse:collapse;">
+            <tr style="border-bottom:1px solid #e8f5ee;">
+                <td style="padding:8px 0; font-weight:600;">Sabrina Arfanindia D</td>
+                <td style="padding:8px 0; text-align:right; color:#888;">2802448755</td>
+            </tr>
+            <tr style="border-bottom:1px solid #e8f5ee;">
+                <td style="padding:8px 0; font-weight:600;">Herlinda Angelica Tanjaya</td>
+                <td style="padding:8px 0; text-align:right; color:#888;">2802397754</td>
+            </tr>
+            <tr>
+                <td style="padding:8px 0; font-weight:600;">Kristian Novan</td>
+                <td style="padding:8px 0; text-align:right; color:#888;">2802458560</td>
+            </tr>
+        </table>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
